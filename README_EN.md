@@ -10,7 +10,7 @@
 
 🌐 **Language / Язык:** **[English](README.md)** | **[Русский](README_RU.md)**
 
-**VMC (Vseslav Makarov Camera)** is a high-performance software-hardware computational photography suite for the Android operating system. The project originated as a deep architectural overhaul of the **LMC 8.8 mod (Google Camera 8.8.224 by Hasli fix)** and, through 93 rigorous engineering iterations, evolved into an independent camera platform featuring a closed-loop hardware auto-calibrator, direct DSP/NPU compute core addressing, and an industry-first dual-corner viewfinder control interface.
+**VMC (Vseslav Makarov Camera)** is a high-performance software-hardware computational photography suite for the Android operating system. The project originated as a deep architectural overhaul of the **LMC (Hasli) 8.8 mod (Google Camera 8.8.224 fix by Hasli )** and, through 93 rigorous engineering iterations, evolved into an independent camera platform featuring a closed-loop hardware auto-calibrator, direct DSP/NPU compute core addressing, and an industry-first dual-corner viewfinder control interface.
 
 All photographs produced by the application embed an authoritative digital signature in the EXIF metadata: `Camera by Vseslav Makarov`.
 
