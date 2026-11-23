@@ -291,7 +291,7 @@ Traditional GCam mods rely on static XML lookup tables. VMC pioneers real-time c
 
 ## 🚀 Installation & Quick Start
 
-1. Download **`VMC8.8_v93.apk`** from [Releases](https://github.com/vseslav-makarov/vmc-camera/releases).
+1. Download **`VMC8.8_v93.apk`** from [Releases](https://github.com/Vsesmak/VMC-Camera-Release/releases/tag/v93).
 2. Install the APK on your device (package `com.google.android.vmcamera` installs alongside existing GCam ports without conflict).
 3. Grant required permissions (Camera, Microphone, Location, Storage).
 4. Copy XML profiles from `configs/` to `/sdcard/LMC8.8/` on your device's internal storage.
