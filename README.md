@@ -1,4 +1,3 @@
-[README_EN.md](https://github.com/user-attachments/files/35275033/README_EN.md)
 # VMC (Vseslav Makarov Camera) 8.8
 ### Next-Generation Computational Photography: Comprehensive Technical Audit, Core Engine Architecture, and Dual-Corner Viewfinder HUD
 
