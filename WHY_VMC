@@ -1,122 +1,114 @@
-# Почему штатные камеры зашли в тупик: как создавался VMC и управление физикой кадра на лету
+# Why Stock OEM Smartphone Cameras Hit a Dead End: The Genesis of VMC and In-Flight Frame Physics Control
 
-> **Автор:** Всеслав Макаров (Vseslav Makarov)  
-> **Проект:** VMC (Vseslav Makarov Camera) 8.8  
-> **Репозиторий:** [GitHub: VMC-Camera](https://github.com/)
-
----
-
-## 1. Введение: парадокс современной мобильной фотографии
-
-Современные смартфоны оснащаются феноменальным «железом»: дюймовые сенсоры (Sony LYT-900), сложнейшая оптика с переменной диафрагмой, перископические зум-модули и мощнейшие нейропроцессоры. 
-
-Но если вы откроете штатную камеру практически любого современного флагмана, вы столкнетесь с парадоксом: **железо великолепное, а контроль над ним у фотографа фактически отобрали**.
-* Агрессивные алгоритмы шумоподавления превращают листву, траву и асфальт в пластилиновую «акварель».
-* Пытаясь компенсировать мыло, алгоритмы накладывают грубый контурный перешарп (halo-эффекты вокруг объектов).
-* Доступ к оптическим возможностям спрятан: чтобы принудительно прикрыть диафрагму до f/2.0 или f/4.0 для резкости по краям кадра, нужно переключаться в громоздкий Pro-режим, где половина автоматики перестает работать.
+> **Author:** Vseslav Makarov (VSEMAK)  
+> **Project:** VMC (Vseslav Makarov Camera) 8.8  
+> **Repository:** [GitHub: VMC-Camera](https://github.com/)  
+> 🌐 **Language / Язык:** **[English](WHY_VMC_EN.md)** | **[Русская версия](WHY_VMC.md)**
 
 ---
 
-## 2. Старый путь моддинга: пытка «Либер-патчерами» и копанием в Hex-байтах
+## 1. Introduction: The Modern Mobile Photography Paradox
 
-Многие годы спасением для энтузиастов были порты Google Camera (GCam). Они давали непревзойденный HDR+ и естественный динамический диапазон. Но настройка GCam со временем превратилась в отдельный вид пытки:
+Modern smartphones are equipped with phenomenal hardware: 1-inch sensor dies (Sony LYT-900), intricate variable-aperture optics, periscope telephoto assemblies, and massive neural processing units.
 
-1. **Многоуровневые лабиринты меню:**  
-   Чтобы изменить тонкую настройку резкости или подавления шума в классическом «Либер-патчере» (Libpatcher), нужно было:
-   * Сделать тестовый снимок.
-   * Свернуть видоискатель, зайти в Настройки -> Дополнительно -> Либер-патчер -> Выбрать модуль камеры -> Найти нужный параметр среди 50 ползунков со странными названиями.
-   * Изменить значение, вернуться назад, перезагрузить камеру... и так по 50 раз подряд.
-2. **Побайтовое редактирование Hex-кода:**  
-   Продвинутые твики алгоритмов требовали декомпиляции нативных библиотек `libgcam.so`, дизассемблирования в IDA Pro и ручной правки шестнадцатеричных байтов (Hex-патчинг) для изменения весов матриц или инструкций DSP. Ошибка в один байт — немедленный вылет приложения (SIGSEGV).
-
-Фотография — это момент. Невозможно заниматься творчеством, когда между глазом фотографа и физикой кадра стоит стена из сотни выпадающих меню и шестнадцатеричных редакторов.
+Yet, open the stock camera application on virtually any modern flagship, and you are immediately confronted with a fundamental paradox: **the hardware is magnificent, but the photographer has been completely stripped of control over its physical behavior**.
+* Aggressive noise-reduction algorithms melt fine foliage, grass, and asphalt textures into plastic "watercolor" smudges.
+* In an artificial attempt to mask this blur, the ISP applies crude edge oversharpening, leaving distracting white halos around contrast boundaries.
+* Optical capabilities are deliberately buried: if you want to stop down the aperture to f/2.0 or f/4.0 to achieve corner-to-corner edge sharpness, you are forced into an awkward "Pro" mode where half the computational HDR+ magic is disabled.
 
 ---
 
-## 3. Месяцы инженерного труда и сотни часов отладки
+## 2. The Legacy Modding Trap: Libpatcher Labyrinths and Hex-Patching Torture
 
-Проект **VMC (Vseslav Makarov Camera)** создавался с одной главной целью: **вернуть фотографу мгновенный, интуитивный контроль над физикой сенсора прямо во время съемки, не отрывая взгляда от видоискателя**.
+For years, Google Camera (GCam) ports were the sanctuary for mobile photography purists, delivering unrivaled dynamic range and authentic tonal roll-off. But fine-tuning GCam eventually devolved into its own unique ordeal:
 
-Но за видимой простотой интерфейса стояли месяцы сложнейшей инженерной работы:
-* **Эволюция от v16 до v93:** Были пройдены десятки промежуточных архитектурных ревизий, написаны тысячи строк кода на Java, C/C++ и Smali.
-* **Борьба с Qualcomm Hexagon DSP и FastRPC:** Заставить закрытый вычислительный пайплайн Google Camera работать на разных поколениях процессоров (от Snapdragon 865 с Hexagon v66 до новейшего Snapdragon 8 Gen 3 с Hexagon v75) потребовало написания низкоуровневой пробы архитектуры (`libmakcam_hvx_probe.so`) и бесшовного переключения библиотек без крашей ядра DSP.
-* **Тысячи тестовых снимков и разборов дампов:** Мы анализировали дампы памяти, исследовали RAW DNG матрицы, искали причины «зеленого асфальта», паразитных шумов в тенях и микросмазов при серийной склейке кадров. Ограничивали размеры системных логов, оптимизировали утечки памяти и добивались стабильности, при которой камера запускается и снимает мгновенно.
+1. **Multi-Tiered Menu Labyrinths:**  
+   Adjusting fine sharpness or noise suppression in a traditional "Libpatcher" required an excruciating workflow:
+   * Capture a test shot.
+   * Minimize the viewfinder, navigate to *Settings -> Advanced -> Camera Modules -> Libpatcher -> hunt for a specific parameter among 50 cryptic sliders*.
+   * Alter the value, exit back, restart the camera stream... and repeat 50 times in a row.
+2. **Byte-Level Hexadecimal Patching:**  
+   Advanced algorithmic tweaks required decompiling native `libgcam.so` libraries, disassembling in IDA Pro, and manually editing raw hex bytes to tweak convolution matrix weights or DSP instructions. A single errant byte resulted in an instant `SIGSEGV` crash dump.
+
+Photography is about capturing fleeting moments. Creative momentum dies when a wall of a hundred dropdown menus and hexadecimal editors stands between the photographer's eye and the sensor's physical response.
 
 ---
 
-## 4. Революция интерфейса: Dual-Corner Viewfinder HUD
+## 3. Months of Low-Level Engineering and Hundreds of Debugging Hours
 
-В VMC 8.8 вся концепция управления была переосмыслена с нуля. Экран видоискателя разделен на две специализированные эргономичные зоны, расположенные точно под естественное движение пальцев:
+The **VMC (Vseslav Makarov Camera)** project was founded on a singular core principle: **to give the photographer instantaneous, intuitive control over sensor physics directly inside the live preview, without ever breaking eye contact with the composition**.
+
+Yet beneath the apparent simplicity of the interface lies months of grueling systems engineering:
+* **Evolution from v16 to v93:** Dozens of intermediate architectural revisions were designed, compiled, and verified across thousands of lines of Java, C/C++, and Smali.
+* **Mastering Qualcomm Hexagon DSP & FastRPC:** Coaxing Google Camera's proprietary Halide computational pipeline into stable execution across disparate processor generations (from Snapdragon 865 with Hexagon v66 to Snapdragon 8 Gen 3 with Hexagon v75) necessitated authoring a dedicated low-level JNI architectural probe (`libmakcam_hvx_probe.so`) and implementing dynamic FastRPC call translation without crashing the DSP kernel.
+* **Thousands of Capture Dumps Analyzed:** We scrutinized system memory dumps, inspected raw sensor Bayer DNGs, diagnosed root causes of "green shadow tint" on road surfaces, analyzed shadow noise floors, and stabilized multi-frame merge queues. We enforced strict memory watermarks, eradicated memory leaks, and engineered a camera platform that launches and captures instantaneously.
+
+---
+
+## 4. The Interface Revolution: Dual-Corner Viewfinder HUD
+
+In VMC 8.8, the interaction model was completely redesigned from the ground up. The viewfinder viewport is divided into two specialized ergonomic operational zones, positioned precisely along natural thumb arcs:
 
 ```
 ┌────────────────────────────────────────────────────────┐
-│ [RAW] [HDR+]                      [AI HUD: DSP / AUTO] │ <── Верхний правый угол:
-│                                                        │     Телеметрия, автокалибровка,
-│                                                        │     профиль резкости в реальном времени
+│ [RAW] [HDR+]                      [AI HUD: DSP / AUTO] │ <── Top-Right Corner:
+│                                                        │     Real-time analytics, auto-tuner,
+│                                                        │     hot-swappable color science
 │                                                        │
-│                      ВИДОИСКАТЕЛЬ                      │
+│                     LIVE VIEWFINDER                    │
 │                                                        │
 │ [SENSOR: 1.0/1.2/1.5/2.0]                              │
-│ [APERTURE: f/1.63-4.0]                                 │ <── Нижний левый угол:
-│ [FOCUS: AF / MF / MACRO]                               │     Прямое управление оптикой и сенсором
+│ [APERTURE: f/1.63-4.0]                                 │ <── Bottom-Left Corner:
+│ [FOCUS: AF / MF / MACRO]                               │     Direct physical sensor & optics
 └────────────────────────────────────────────────────────┘
 ```
 
-### Левый нижний угол: Прямое управление оптикой и сенсором (под большой палец)
-Вам больше никогда не нужно заходить в настройки посреди съемки. Все ключевые параметры физики кадра переключаются в одно касание:
-1. **Режимы In-Sensor Zoom (ISZ):**  
-   Мгновенное переключение между честным кропом сенсора без потери детализации: **1.0x -> 1.2x -> 1.5x -> 2.0x**. Никакой размытой цифровой интерполяции.
-2. **Мгновенный селектор диафрагмы (Aperture Switcher):**  
-   Для смартфонов с изменяемой диафрагмой (например, Xiaomi 14 Ultra) прямо в видоискателе доступен выбор: **Авто, f/1.63, f/2.0, f/3.2, f/4.0**, а также плавный ручной слайдер. Хотите максимальное боке в сумерках? Одно касание — f/1.63. Нужна идеальная резкость пейзажа по всему полю кадра? Одно касание — f/4.0.
-3. **Фокус-модуль:**  
-   Быстрое переключение авто-/ручного фокуса и макрорежима без лишних движений.
+### Bottom-Left Corner: Direct Optics & Sensor Control (Under the Primary Thumb)
+Never navigate into settings sheets mid-shoot again. All fundamental optical and sensor parameters respond to a single tap:
+1. **In-Sensor Zoom (ISZ) Modes:**  
+   Instantaneous switching between pure uninterpolated high-resolution sensor crops: **1.0x -> 1.2x -> 1.5x -> 2.0x**. Zero digital softening.
+2. **Instant Aperture Switcher:**  
+   For variable-aperture flagships (such as the Xiaomi 14 Ultra), a dedicated viewfinder button provides immediate access: **Auto, f/1.63, f/2.0, f/3.2, f/4.0**, plus a continuous manual slider across 9 physical blade stops. Wide-open f/1.63 for twilight portraits? One tap. Edge-to-edge landscape sharpness at f/4.0? One tap.
+3. **Focus Module Selector:**  
+   Instant cycling between phase-detection autofocus (`AF Auto`), macro close-up, hyperfocal infinity, and manual focus (`MF`) with exact diopter feedback.
 
-### Правый верхний угол: Профессиональное меню вычислительной фотографии и телеметрии на лету
-Вместо того чтобы копаться в 50 скрытых пунктах Либер-патчера или вручную править шестнадцатеричные байты матриц, весь вычислительный движок выведен прямо в правое верхнее меню видоискателя:
+### Top-Right Corner: Professional In-Flight Computational Suite & Telemetry
+Instead of digging through 50 hidden Libpatcher sliders or patching binary matrices, the entire computational photography engine is mapped to the top-right viewfinder overlay:
 
-1. **Динамический индикатор аппаратного ускорения HEX / CPU:**  
-   Прямо в видоискателе отображается статус вычислительного конвейера:
-   * **`HEX`:** кадр обрабатывается на аппаратном векторном DSP Qualcomm Hexagon (HVX) через FastRPC с околонулевым энергопотреблением и мгновенной скоростью слияния многокадрового стека.
-   * **`CPU`:** система честно предупреждает об откате на ядра центрального процессора, если DSP перегружен или драйвер дал сбой. Больше не нужно гадать, почему греется телефон или долго склеивается снимок.
-
-2. **Индикатор готовности создания HDR+ Enhanced:**  
-   Мониторинг глубины заполнения кольцевого ZSL-буфера кадров в оперативной памяти в реальном времени. Фотограф точно видит, когда камера готова к мгновенному захвату тяжелой 24–36 кадровой серии без задержки спуска (Zero Shutter Lag) и без риска потери кадров.
-
-3. **Индикация и регулировка уровней шумоподавления на лету:**  
-   Отображение текущих коэффициентов пространственного и временного шумоподавления. Можно прямо из видоискателя ползунком изменить интенсивность подавления яркостного (Luma) и хроматического (Chroma) шума под конкретную текстуру кадра.
-
-4. **Горячая замена тонмап-модели (Tone-Mapping Model):**  
-   Мгновенное переключение передаточных кривых динамического диапазона без перезагрузки камеры:
-   * **`HDRnet Neural`** (адаптивная нейросетевая тонокомпенсация от Google).
-   * **`Filmic Tone-Curve`** (кинематографический спад в светах с мягким плечом Roll-off).
-   * **`Reinhard Extended`** (экстремальный динамический диапазон для сложного контраста).
-   * **`ACES / Rec.709`** (кинематографический эталон тонопередачи).
-
-5. **Горячая смена цветового пространства:**  
-   Переключение гамута на лету: **DCI-P3 (Wide Color Gamut)**, **Display P3**, **sRGB**, **Rec.2020** с автоматической покадровой хроматической адаптацией CAT02.
-
-6. **Горячая смена режима расчёта баланса белого (AWB):**  
-   Переключение между нейросетевым **Google Neural AWB** (Pixel), аппаратным блоком процессора **Vendor ISP Spectra** и прямым расчетом **Hybrid CCT Matrix** с отображением температуры в Кельвинах.
-
-7. **Цветовая калибровка на лету (CCM Tuning):**  
-   Интерактивная коррекция матрицы цветности (CCM $3\times 3$) и динамическая защита нейтрали (`clampAwb`), навсегда устраняющая паразитный зеленый тинт на асфальте и тенях.
-
-8. **Горячее изменение параметров брекетинга:**  
-   Полный контроль над экспозиционной вилкой: **Авто** (адаптация к яркости сцены), **Пресеты** (HDR $\pm 2.0$ EV, тени, света) и **Ручной режим** с точным указанием количества серий, числа кадров ($N \in [3 \dots 48]$) и шага экспозиции ($\Delta EV$).
-
-9. **Выбор конфига прямо из меню видоискателя:**  
-   Мгновенное переключение между вшитыми в APK заводскими профилями (`AI Dynamic v93`, `Leica Classic`, `FilmStyle 5.1`), автоматическим определением сенсора (`Auto`) или загрузкой пользовательских XML-конфигов без двойных тапов и без выхода из видоискателя.
-
-10. **Closed-Loop Hardware Auto-Tuner (Автокалибровщик):**  
-    Адаптивный алгоритм замкнутого цикла, оценивающий гистограмму каждого кадра и динамически удерживающий идеальный баланс резкости без появления белых контурных ореолов перешарпа.
+1. **Dynamic Hardware Acceleration Indicator (`HEX` vs `CPU`):**  
+   Real-time execution status displayed right in the preview:
+   * **`HEX`:** Frames are processed on Qualcomm's vector Hexagon DSP (HVX) via FastRPC with near-zero battery drain and lightning-fast burst merge throughput.
+   * **`CPU`:** Transparently alerts you if thermal throttling or driver instability forces a fallback to Kryo/Oryon CPU cores. No more guessing why the phone is warming up or why merge times spiked.
+2. **HDR+ Enhanced Processing Readiness Indicator:**  
+   Real-time monitoring of Zero Shutter Lag (ZSL) ring buffer occupancy in system RAM. You know with certainty when the camera is primed for an instant 24–36 frame RAW burst without shutter lag or dropped frames.
+3. **Live Denoise Monitoring & Gain Adjustment:**  
+   Continuous readout of spatial and temporal noise reduction gains with an interactive in-viewfinder slider to calibrate Luma and Chroma filtering for the exact texture of your scene.
+4. **Hot-Swappable Tone-Mapping Model:**  
+   Instantaneous switching between dynamic range transfer curves without restarting the camera:
+   * **`HDRnet Neural`** (Google's local adaptive neural tone mapping).
+   * **`Filmic Tone-Curve`** (analog highlight roll-off with natural mid-tone contrast).
+   * **`Reinhard Extended`** (exponential highlight compression for extreme dynamic range).
+   * **`ACES / Rec.709`** (motion-picture industry color grading standard).
+5. **Hot-Swappable Color Space Engine:**  
+   On-the-fly gamut selection: **DCI-P3 (Wide Color Gamut)**, **Display P3**, **sRGB**, and **Rec.2020** with automatic per-frame CAT02 chromatic adaptation.
+6. **Hot-Swappable AWB Engine:**  
+   Instant switching between **Google Neural AWB** (Pixel convolutional network), **Vendor Hardware ISP Spectra**, and raw **Hybrid CCT Matrix** with live Kelvin readout.
+7. **Real-Time Color Correction & CCM Tuning:**  
+   Interactive $3\times 3$ Color Correction Matrix bias adjustment and dynamic neutral point protection (`clampAwb`), permanently eliminating green casts on asphalt and in shadows.
+8. **Hot-Swappable Exposure Bracketing Engine:**  
+   Complete control over multi-frame dynamic range capture: **Auto** (scene-luminance adapted), **Curated Presets** (Extreme HDR $\pm 2.0$ EV, Shadow Boost, Highlight Preservation), and **Parametric Manual Mode** with user-defined series count, frame depth ($N \in [3 \dots 48]$), and exposure step ($\Delta EV$).
+9. **In-Viewfinder Config Management Suite:**  
+   One-tap switching between embedded factory profiles (`AI Dynamic v93`, `Leica Classic`, `FilmStyle 5.1`), automated hardware detection (`Auto`), or custom external XML files without double-tapping black viewports or exiting preview.
+10. **Closed-Loop Hardware Auto-Calibrator:**  
+    An adaptive closed-loop algorithm analyzing per-frame histograms to maintain optimal edge microcontrast while actively suppressing white halo oversharpening artifacts.
 
 ---
 
-## 5. Итог
+## 5. Conclusion
 
-VMC 8.8 — это доказательство того, что мобильная фотография может быть одновременно бескомпромиссно качественной и невероятно удобной. Больше не нужно выбирать между «мыльной штатной камерой» и «неудобным инженерным монстром с сотней меню».
+VMC 8.8 stands as definitive proof that mobile computational photography can deliver uncompromising optical fidelity alongside effortless, intuitive ergonomics. You no longer need to choose between a "blurry, over-processed stock camera" and an "impenetrable engineering tool with a hundred menus."
 
-Весь проект оптимизирован, нативные библиотеки очищены от мусора, а релиз открыт для сообщества ценителей настоящей мобильной фотографии.
+The entire platform has been hardened, native binaries stripped of overhead, and released freely to the global community of discerning mobile photographers.
 
-* **Скачать релиз и протестировать:** [GitHub Releases v93](https://github.com/)
-* **Обратная связь и обсуждение:** Ждем ваших отзывов, тестов и снимков!
+* **Download Release & Test:** [GitHub Releases v93](https://github.com/)
+* **Community Discussion:** We welcome your tests, feedback, and photographs!
