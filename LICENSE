@@ -24,9 +24,20 @@ THE SOFTWARE, ITS ARCHITECTURAL CONCEPTS, INTERFACES, AND ALGORITHMS ARE STRICTL
 (a) NO COMMERCIAL USE: You may not sell, rent, lease, sublicense, distribute for a fee, monetize, or exploit the Software or any portion thereof directly or indirectly in any commercial product, service, or distribution platform.
 (b) NO OEM OR HARDWARE VENDOR INTEGRATION: Original Equipment Manufacturers (OEMs), smartphone manufacturers, camera module vendors, chipset vendors, commercial ROM developers, and commercial mobile application developers are STRICTLY PROHIBITED from:
     (i) Pre-installing, bundling, or integrating this Software into any firmware, system ROM, operating system, or device image;
-    (ii) Copying, reimplementing, reverse-engineering, cloning, or patenting the user interface concepts, layouts, and algorithms developed herein, including but not limited to:
-        - The Dual-Corner Viewfinder HUD (direct manual sensor controls located in the bottom-left corner of the live viewfinder combined with real-time AI and compute telemetry in the top-right corner);
-        - The Closed-Loop Hardware Auto-Calibrator with histogram DRC and anti-halo sharpness adaptation;
+    (ii) Copying, reimplementing, reverse-engineering, cloning, or patenting the user interface concepts, layouts, architectures, and algorithms developed herein, including but not limited to:
+        - The Dual-Corner Viewfinder HUD architecture, comprising:
+          * Direct manual sensor and optical controls located in the bottom-left corner of the live viewfinder (In-Sensor Zoom 1.0x-2.0x, multi-step and continuous physical variable aperture f/1.63-f/4.0 switcher, and focus drive selector);
+          * The Top-Right Viewfinder Advanced Control & Telemetry Suite ("Правая верхняя шторка / Оверлей"), incorporating:
+            - Real-time hardware execution indicator (HEX vs CPU / Qualcomm Hexagon DSP FastRPC vector offload status versus CPU fallback);
+            - HDR+ Enhanced frame accumulation queue and processing readiness indicator;
+            - Live spatial and temporal luma/chroma denoise level monitoring and in-viewfinder continuous gain adjustment;
+            - Hot-swappable tone-mapping model switcher (instantaneous in-flight selection between HDRnet neural tone-curve, Filmic, ACES, and custom spline curves);
+            - Hot-swappable color space engine (on-the-fly gamut selection between DCI-P3 Wide Gamut, Display P3, sRGB, and Rec.2020 with dynamic chromatic adaptation);
+            - Multi-engine White Balance (AWB) computation switcher (runtime selection between Google Neural AWB, Vendor Hardware ISP AWB, and CCT matrix adaptation);
+            - Real-time Color Correction Matrix (CCM) calibration and sensor neutral point clamping;
+            - Parametric exposure bracketing engine (Auto-exposure bracketing, curated dynamic range presets, and manual multi-series configuration with customizable frame count N and exposure offset step Delta EV);
+            - In-viewfinder profile and configuration management system (on-the-fly switching between embedded APK profiles, automated hardware-matched configs, and custom XML presets without exiting camera preview);
+        - The Closed-Loop Hardware Auto-Calibrator with live histogram DRC analysis and anti-halo sharpness adaptation;
         - The multi-generational Hexagon FastRPC dispatch architecture;
         - The integrated multi-step and continuous physical aperture switcher.
 (c) Any such commercial integration, licensing, or adoption requires a separate, formal, prior written licensing agreement executed directly with Vseslav Makarov.
