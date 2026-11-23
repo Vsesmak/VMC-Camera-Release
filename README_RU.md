@@ -291,7 +291,7 @@ flowchart TD
 
 ## 🚀 Установка и быстрый старт
 
-1. Скачайте файл **`VMC8.8_v93.apk`** со страницы [Releases](https://github.com/vseslav-makarov/vmc-camera/releases).
+1. Скачайте файл **`VMC8.8_v93.apk`** со страницы [Releases](https://github.com/Vsesmak/VMC-Camera-Release/releases/tag/v93).
 2. Установите APK на смартфон (пакет `com.google.android.vmcamera` устанавливается независимо и не конфликтует с другими версиями GCam).
 3. Предоставьте все запрашиваемые разрешения (Камера, Микрофон, Местоположение, Хранилище).
 4. Скопируйте XML-конфигурации из папки `configs/` в директорию `/sdcard/LMC8.8/` на внутренней памяти телефона.
