@@ -305,7 +305,7 @@ flowchart TD
 
 ## 🚀 Установка и быстрый старт
 
-1. Скачайте файл **`VMC8.8_v95_obf.apk`** (или пакет для разблокировки AUX на Realme/OPPO/OnePlus — `_snapcam_obf` / `_aweme_obf` / `_qcamera3_obf`, для Samsung — `_ruler_obf` / `_scan3d_obf`, а также `_glens_obf`) со страницы [Releases](https://github.com/Vsesmak/VMC-Camera-Release/releases/latest).
+1. Скачайте файл **`VMC8.8_v95_vmcamera_obf.apk`** (или пакет для разблокировки AUX на Realme/OPPO/OnePlus — `_snapcam_obf` / `_aweme_obf` / `_qcamera3_obf`, для Samsung — `_ruler_obf` / `_scan3d_obf`, а также `_glens_obf`) со страницы [Releases](https://github.com/Vsesmak/VMC-Camera-Release/releases/latest).
 2. Установите APK на смартфон (пакет `com.google.android.vmcamera` устанавливается независимо и не конфликтует с другими версиями GCam).
 3. Предоставьте все запрашиваемые разрешения (Камера, Микрофон, Местоположение, Хранилище).
 4. Скопируйте XML-конфигурации из папки `configs/` в директорию `/sdcard/LMC8.8/` на внутренней памяти телефона.

@@ -305,7 +305,7 @@ Traditional GCam mods rely on static XML lookup tables. VMC pioneers real-time c
 
 ## 🚀 Installation & Quick Start
 
-1. Download **`VMC8.8_v95_obf.apk`** (or an OEM-whitelisted package variant: `VMC8.8_v95_snapcam_obf.apk` / `_aweme_obf.apk` / `_qcamera3_obf.apk` for Realme/OPPO/OnePlus, `_ruler_obf.apk` / `_scan3d_obf.apk` for Samsung, or `_glens_obf.apk`) from [Releases](https://github.com/Vsesmak/VMC-Camera-Release/releases/latest).
+1. Download **`VMC8.8_v95_vmcamera_obf.apk`** (or an OEM-whitelisted package variant: `VMC8.8_v95_snapcam_obf.apk` / `_aweme_obf.apk` / `_qcamera3_obf.apk` for Realme/OPPO/OnePlus, `_ruler_obf.apk` / `_scan3d_obf.apk` for Samsung, or `_glens_obf.apk`) from [Releases](https://github.com/Vsesmak/VMC-Camera-Release/releases/latest).
 2. Install the APK on your device (package `com.google.android.vmcamera` installs alongside existing GCam ports without conflict).
 3. Grant required permissions (Camera, Microphone, Location, Storage).
 4. Copy XML profiles from `configs/` to `/sdcard/LMC8.8/` on your device's internal storage.
