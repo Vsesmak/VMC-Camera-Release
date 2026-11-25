@@ -14,7 +14,7 @@
 - `VMC8.8_v95_glens_obf.apk` (`com.google.android.GoogleCameraEng`) — `SHA-256: 7FA9E3662E67F59F0318D77978BA6D578883D3C653B233B320D123EEDCACCD0F`
 
 ### Key Changes in v95
-- **+1,534 Noise Models (`119..1652`, 1,654 total)** & **+1,237 Color Models (`21..1257`, 1,258 total)** bundled in compressed `assets/models/` (`160.9 KB` total), preserving all legacy config indices (`-1..118` and `0..20`).
+- **429 Smartphone Noise Models (`119..547`, 549 total)** & **45 Smartphone Color Models (`21..65`, 66 total)** bundled in compressed `assets/models/` (`44.5 KB` total), preserving all legacy config indices (`-1..118` and `0..20`).
 - **Perceptual System Color Vibrance (`ModelDatabase.applyPerceptualSystemVibrance`)**: replaces naive `satCCT * 1.3` multiplication with Rec.709 luminance-preserving spectral vibrance, intrinsic CCM diagonal attenuation, indoor skin protection, and strict `rowSum == 1.0` neutral preservation.
 - **Night Motion Blur Fix Without Disabling `lib_shasta_force_key = 28008052`**: re-enabled selective blurry-frame rejection (`pref_zsl_burstfix_key = 0`) across all 4 XML profiles; added real-time `TYPE_GYROSCOPE` + OIS handheld shutter guard with dark-scene frame count compensation while keeping up to 5s exposures on tripods.
 - **Hardware-First AutoCalibrator Redesign & Master Kill Switch**:

@@ -7,10 +7,10 @@
 
 ## What's New in v95
 
-### 1. Expanded Catalogs: 1,534 Noise Models & 1,237 Color Matrices (Only 160.9 KB Compressed)
-- **Noise Models (`119..1652`):** Added **1,534** validated noise models (flagship mobile sensors including Sony LYT-900/808/600, IMX989/890/858, Samsung HP2/HP3/GN3, OmniVision OV50H/OV64B, Google GNK + 1,114 Darktable profiles with Low/High ISO dual-band calibration).  
+### 1. Smartphone-Only Catalogs: 429 Noise Models & 45 Color Matrices (Only 44.5 KB Compressed)
+- **Noise Models (`119..547`):** Added **429** validated mobile sensor noise models (Sony LYT-900/808/600, IMX989/890/858, Samsung HP2/HP3/GN3, OmniVision OV50H/OV64B, Google GNK, etc.).  
   Available under: *Settings → Additional settings → Processing functions → Noise model → Camera module → Select noise model*.
-- **Color Models (`21..1257`):** Added **1,237** calibrated 3×3 color correction matrices (curated Leica, Hasselblad, Zeiss, Pixel, Fujifilm, Kodak profiles + Rawspeed, LibRaw & RawTherapee datasets).  
+- **Color Models (`21..65`):** Added **45** calibrated 3×3 color correction matrices exclusively for smartphones (Xiaomi, Samsung, Google Pixel, Sony Xperia, vivo, OPPO, OnePlus, Honor).  
   Available under: *Settings → Additional settings → Processing functions → Color correction → Camera module → Select color model*.
 - **Backward Config Compatibility:** Strictly appended **after index 118** (noise) and **after index 20** (color) so existing XML configs remain 100% compatible.
 
