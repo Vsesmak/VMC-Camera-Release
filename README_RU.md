@@ -1,8 +1,8 @@
 # VMC (Vseslav Makarov Camera) 8.8
 ### Профессиональная вычислительная фотография нового поколения: полный технический аудит, эволюция движка и архитектура Dual-Corner Viewfinder HUD
 
-[![Release](https://img.shields.io/badge/Release-VMC%208.8%20v93-brightgreen.svg?style=flat-square&logo=github)](https://github.com/vseslav-makarov/vmc-camera/releases)
-[![Build](https://img.shields.io/badge/Build-66263635-blue.svg?style=flat-square)](https://github.com/vseslav-makarov/vmc-camera)
+[![Release](https://img.shields.io/badge/Release-VMC%208.8%20v95-brightgreen.svg?style=flat-square&logo=github)](https://github.com/Vsesmak/VMC-Camera-Release/releases/tag/v95)
+[![Build](https://img.shields.io/badge/Build-66263637-blue.svg?style=flat-square)](https://github.com/Vsesmak/VMC-Camera-Release)
 [![License](https://img.shields.io/badge/License-Proprietary%20Source--Available-purple.svg?style=flat-square)](LICENSE)
 [![Android](https://img.shields.io/badge/Android-10%20--%2015-3DDC84.svg?style=flat-square&logo=android&logoColor=white)](https://developer.android.com)
 [![Base Engine](https://img.shields.io/badge/Base-Google%20Camera%208.8.224-4285F4.svg?style=flat-square&logo=google&logoColor=white)](https://www.celsoazevedo.com/files/android/google-camera/)
@@ -18,13 +18,26 @@
 
 🌐 **Язык / Language:** **[Русский](README_RU.md)** | **[English](README_EN.md)**
 
-**VMC (Vseslav Makarov Camera)** — высокопроизводительный программно-аппаратный комплекс мобильной фотографии для операционной системы Android. Проект зародился как глубокая переработка оригинального мода **LMC (Hasli) 8.8 (Google Camera 8.8.224 fix от Hasli )** и за 93 итерации инженерной разработки эволюционировал в самостоятельную камерную платформу с замкнутым циклом аппаратной автокалибровки, прямой адресацией вычислительных ядер DSP/NPU и уникальным двухугольным интерфейсом управления сенсором прямо в зоне живого видоискателя.
+**VMC (Vseslav Makarov Camera)** — высокопроизводительный программно-аппаратный комплекс мобильной фотографии для операционной системы Android. Проект зародился как глубокая переработка оригинального мода **LMC (Hasli) 8.8 (Google Camera 8.8.224 fix от Hasli)** и за 95 итераций инженерной разработки эволюционировал в самостоятельную камерную платформу с замкнутым циклом аппаратной автокалибровки, прямой адресацией вычислительных ядер DSP/NPU и уникальным двухугольным интерфейсом управления сенсором прямо в зоне живого видоискателя.
 
 Мне очень понравилось, как работал алгоритм HDR++ в модах BSG версии 5.1. Со всем уважением к BSG - мои результаты работы вдохновлены тем прекрасным временем (2018-2020 год) - Когда ты просто устанавливал апк, переключал включатель в положение HDR++, делал минимальную настройку и получал шедевры. Вероятно это связано с тонмап моделью Google Pixel 2 и 3 - удивительно что сейчас на последних Google Pixel снимки плоские и серые, в то время как в начале вычислительной фотографии они поражали объёмом и цветом
 
 Все фотографии, создаваемые приложением, получают авторскую цифровую подпись в метаданных EXIF: `Camera by Vseslav Makarov`.
 
 > 📖 **Манифест автора:** [Почему штатные камеры зашли в тупик и как создавался VMC (читать статью)](WHY_VMC.md) — о месяцах инженерной отладки, отказе от побайтового Hex-патчинга и революции управления физикой кадра на лету из видоискателя.
+
+### 🌐 Технологическая экосистема и партнерские интеграции
+| Направление / Вендор | Технология / Проект | Назначение и реализация в VMC |
+| :--- | :--- | :--- |
+| **@google (Google LLC)** | **Google Camera 8.8.224** | Базовый алгоритмический пайплайн вычислительной фотографии (HDR+ Net, AWB, Spatial Tone Mapping) |
+| **Google Pixel Lineup** | **Pixel 6 / 7 / 8 / 9 ISP Architecture** | Аппаратные профили обработки, тюнинг под сенсоры и алгоритмы машинного зрения |
+| **GCam Community** | **[Celso Azevedo GCam Hub](https://www.celsoazevedo.com/files/android/google-camera/)** | Глобальный репозиторий модификаций Google Камеры, площадка публикации и обратной связи |
+| **Qualcomm Technologies** | **Hexagon HVX & QNN HTP** | Аппаратное ускорение векторных вычислений RAW, разгрузка CPU, нулевая задержка спуска |
+| **ARM Limited** | **ARM64 NEON SIMD** | Векторизованная пост-обработка inline в 16-битном пространстве RGB до сжатия в JPEG |
+| **Sony Semiconductor** | **Sony Exmor RS (IMX / LYT)** | Точечная калибровка Noise Model, кастомные уровни черного (Dynamic Black Level) |
+| **Samsung Semiconductor**| **Samsung ISOCELL (GN / HP / JN)** | Адаптивная матрица шума NME, коррекция хроматических аберраций и виньетирования |
+| **Leica Camera AG** | **Leica Authentic Curve & Tone** | Математическая модель экспозиционной кривой (-0.67 EV) для кинематографичных глубоких теней |
+| **Mozilla Foundation** | **MozJPEG Engine** | Треллис-квантование, оптимизация таблиц Хаффмана, максимальная детализация без артефактов сжатия |
 
 ---
 
@@ -301,7 +314,7 @@ flowchart TD
 
 ## 🚀 Установка и быстрый старт
 
-1. Скачайте файл **`VMC8.8_v93.apk`** со страницы [Releases](https://github.com/Vsesmak/VMC-Camera-Release/releases/tag/v93).
+1. Скачайте файл **`VMC8.8_v95_obf.apk`** (или пакет для разблокировки AUX на Realme/OPPO/OnePlus — `_snapcam_obf` / `_aweme_obf` / `_qcamera3_obf`, для Samsung — `_ruler_obf` / `_scan3d_obf`, а также `_glens_obf`) со страницы [Releases](https://github.com/Vsesmak/VMC-Camera-Release/releases/latest).
 2. Установите APK на смартфон (пакет `com.google.android.vmcamera` устанавливается независимо и не конфликтует с другими версиями GCam).
 3. Предоставьте все запрашиваемые разрешения (Камера, Микрофон, Местоположение, Хранилище).
 4. Скопируйте XML-конфигурации из папки `configs/` в директорию `/sdcard/LMC8.8/` на внутренней памяти телефона.
