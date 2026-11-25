@@ -1,22 +1,13 @@
 # VMC (Vseslav Makarov Camera) 8.8
-### Профессиональная вычислительная фотография нового поколения: полный технический аудит, эволюция движка и архитектура Dual-Corner Viewfinder HUD
+### Вычислительная фотография нового поколения: аппаратный автокалибратор, мульти-сенсорный движок и Dual-Corner HUD
 
 [![Release](https://img.shields.io/badge/Release-VMC%208.8%20v95-brightgreen.svg?style=flat-square&logo=github)](https://github.com/Vsesmak/VMC-Camera-Release/releases/tag/v95)
-[![Build](https://img.shields.io/badge/Build-66263637-blue.svg?style=flat-square)](https://github.com/Vsesmak/VMC-Camera-Release)
-[![License](https://img.shields.io/badge/License-Proprietary%20Source--Available-purple.svg?style=flat-square)](LICENSE)
-[![Android](https://img.shields.io/badge/Android-10%20--%2015-3DDC84.svg?style=flat-square&logo=android&logoColor=white)](https://developer.android.com)
-[![Base Engine](https://img.shields.io/badge/Base-Google%20Camera%208.8.224-4285F4.svg?style=flat-square&logo=google&logoColor=white)](https://www.celsoazevedo.com/files/android/google-camera/)
-[![GCam Hub](https://img.shields.io/badge/GCam%20Hub-Celso%20Azevedo-008080.svg?style=flat-square&logo=googlechrome&logoColor=white)](https://www.celsoazevedo.com/files/android/google-camera/)
-[![Target Lineup](https://img.shields.io/badge/Lineup-Google%20Pixel%20%7C%20Snapdragon-EA4335.svg?style=flat-square&logo=googlepixel&logoColor=white)](https://store.google.com/category/phones)
-[![SoC Platform](https://img.shields.io/badge/Qualcomm-Snapdragon%20865%20--%208%20Gen%203-FF7900.svg?style=flat-square&logo=qualcomm&logoColor=white)](https://qualcomm.com)
-[![Hardware Acceleration](https://img.shields.io/badge/DSP%20%2F%20NPU-Hexagon%20HVX%20%7C%20QNN%20HTP-E01A22.svg?style=flat-square&logo=qualcomm&logoColor=white)](https://developer.qualcomm.com)
-[![Vector SIMD](https://img.shields.io/badge/Compute-ARM64%20NEON-0091BD.svg?style=flat-square&logo=arm&logoColor=white)](https://www.arm.com/technologies/neon)
-[![Sensors Support](https://img.shields.io/badge/Sensors-Sony%20Exmor%20RS%20%7C%20Samsung%20ISOCELL-000000.svg?style=flat-square&logo=sony&logoColor=white)](https://sony-semicon.com)
-[![Color Tuning](https://img.shields.io/badge/Color%20Science-Leica%20Authentic%20%7C%20P3-E20613.svg?style=flat-square&logo=leica&logoColor=white)](https://leica-camera.com)
-[![Compression](https://img.shields.io/badge/JPEG%20Engine-Mozilla%20MozJPEG-FF7139.svg?style=flat-square&logo=mozilla&logoColor=white)](https://github.com/mozilla/mozjpeg)
-[![Super Resolution](https://img.shields.io/badge/Super--Res-Google%20Sabre%20%7C%20Lanczos-34A853.svg?style=flat-square&logo=google&logoColor=white)](https://ai.googleblog.com/2018/10/see-better-and-further-with-super-res.html)
+[![Build](https://img.shields.io/badge/Build-66263637-blue.svg?style=flat-square)](https://github.com/Vsesmak/VMC-Camera-Release/releases/latest)
+[![Android](https://img.shields.io/badge/Android-10--15-3DDC84.svg?style=flat-square&logo=android&logoColor=white)](https://developer.android.com)
+[![DSP / NPU](https://img.shields.io/badge/DSP%20%2F%20NPU-Hexagon%20HVX%20%7C%20QNN%20HTP-E01A22.svg?style=flat-square&logo=qualcomm&logoColor=white)](https://developer.qualcomm.com)
+[![License](https://img.shields.io/badge/License-Source--Available-purple.svg?style=flat-square)](../LICENSE)
 
-🌐 **Язык / Language:** **[Русский](README_RU.md)** | **[English](README_EN.md)**
+🌐 **[English](../README.md)** | **Русский** · 📋 **[Changelog (v93–v95)](releases/CHANGELOG_v93_to_v95.md)** · 📖 **[Манифест автора](WHY_VMC.md)** · 📦 **[Скачать APK](https://github.com/Vsesmak/VMC-Camera-Release/releases/latest)**
 
 **VMC (Vseslav Makarov Camera)** — высокопроизводительный программно-аппаратный комплекс мобильной фотографии для операционной системы Android. Проект зародился как глубокая переработка оригинального мода **LMC (Hasli) 8.8 (Google Camera 8.8.224 fix от Hasli)** и за 95 итераций инженерной разработки эволюционировал в самостоятельную камерную платформу с замкнутым циклом аппаратной автокалибровки, прямой адресацией вычислительных ядер DSP/NPU и уникальным двухугольным интерфейсом управления сенсором прямо в зоне живого видоискателя.
 
@@ -37,7 +28,7 @@
 | **Sony Semiconductor** | **Sony Exmor RS (IMX / LYT)** | Точечная калибровка Noise Model, кастомные уровни черного (Dynamic Black Level) |
 | **Samsung Semiconductor**| **Samsung ISOCELL (GN / HP / JN)** | Адаптивная матрица шума NME, коррекция хроматических аберраций и виньетирования |
 | **Leica Camera AG** | **Leica Authentic Curve & Tone** | Математическая модель экспозиционной кривой (-0.67 EV) для кинематографичных глубоких теней |
-| **Mozilla Foundation** | **MozJPEG Engine** | Треллис-квантование, оптимизация таблиц Хаффмана, максимальная детализация без артефактов сжатия |
+| **libjpeg-turbo Project** | **libjpeg-turbo 3.2.1 NEON** | Lossless-оптимизация таблиц Хаффмана и быстрое ARM64 NEON-кодирование/декодирование JPEG |
 
 ---
 
@@ -346,7 +337,7 @@ flowchart TD
    * **Встроенный селектор переменной диафрагмы Aperture Switcher** (дискретный и плавный аналоговый слайдер).
 4. **Приоритет публикации (Prior Art):** Публикация репозитория с криптографически подписанной историей коммитов фиксирует дату мирового приоритета автора в соответствии с Бернской конвенцией об охране литературных и художественных произведений и соглашениями WIPO.
 
-Полный текст лицензионного соглашения представлен в файле [LICENSE](LICENSE).
+Полный текст лицензионного соглашения представлен в файле [LICENSE](../LICENSE).
 
 ---
 *Автор архитектуры и модификации: **Всеслав Макаров (Vseslav Makarov / VSEMAK)**.*  

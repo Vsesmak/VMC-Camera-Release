@@ -153,7 +153,7 @@ VMC integrates an instant Gamut Mode selector in the top-right curtain:
 * **sRGB:** Standard color space for legacy web compatibility;
 * **DCI-P3 (Display P3):** Wide-gamut cinema standard. The $3 \times 3$ Color Conversion Matrix (CCM) dynamically recalculates chromatic coordinates through intermediate CIE 1931 XYZ space:
   $$\begin{bmatrix} R_{P3} \\ G_{P3} \\ B_{P3} \end{bmatrix} = M_{XYZ \to P3} \cdot M_{Sensor \to XYZ} \cdot \begin{bmatrix} R_{raw} \\ G_{raw} \\ B_{raw} \end{bmatrix}$$
-When DCI-P3 is active, the MozJPEG encoder automatically writes valid ICC color profile chunks and metadata tags into the resulting JPEG stream.
+When DCI-P3 is active, the JPEG pipeline writes valid Display P3 ICC color profile chunks and EXIF 0xFFFF metadata tags into the resulting JPEG stream while preserving them through libjpeg-turbo 3.2.1 lossless Huffman optimization.
 
 ---
 
@@ -241,7 +241,7 @@ Beyond user-interface breakthroughs, VMC v93 completely re-engineers the underly
                                     │
                                     ▼
        ┌─────────────────────────────────────────────────────────┐
-       │ 5. MOZILLA MOZJPEG ENCODER (Trellis Quantization)       │
+       │ 5. LIBJPEG-TURBO 3.2.1 NEON (Lossless Huffman Opt)      │
        │    • Independent pre-processing and JPEG quality scales │
        │    • Native DCI-P3 color profile embedding              │
        │    • Authoritative EXIF: «Camera by Vseslav Makarov»    │
@@ -255,14 +255,14 @@ Beyond user-interface breakthroughs, VMC v93 completely re-engineers the underly
 
 ---
 
-### 2.1. Mozilla MozJPEG Integration with Dual Quality Controls
+### 2.1. libjpeg-turbo 3.2.1 NEON Integration with Lossless Huffman Optimization
 
 Stock Android JPEG encoding relies on basic `libjpeg-turbo`, which prioritizes encoding speed over visual fidelity, introducing harsh 8x8 block artifacts and color banding across smooth sky gradients.
 
-VMC integrates **Mozilla MozJPEG** directly into the post-processing pipeline:
-* **Trellis Quantization:** Dynamic programming optimization of DCT coefficients to maximize perceptual quality per bit;
+VMC integrates **libjpeg-turbo 3.2.1 (ARM64 NEON SIMD)** directly into the post-processing pipeline:
+* **Lossless Huffman Entropy Optimization:** Re-packs Huffman tables without re-quantizing DCT coefficients (0% pixel loss, ~20–30% smaller files);
 * **Optimized Huffman Tables:** Optimal variable-length entropy coding;
-* **Dual Quality Sliders:** Dedicated independent controls for raw pipeline buffer fidelity and final MozJPEG file compression. Banding across twilight skies is completely eliminated.
+* **Dual Quality Sliders:** Dedicated independent controls for raw pipeline buffer fidelity and final 97% JPEG output with lossless Huffman optimization. Banding across twilight skies is completely eliminated.
 
 ---
 

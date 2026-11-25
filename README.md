@@ -1,22 +1,13 @@
 # VMC (Vseslav Makarov Camera) 8.8
-### Next-Generation Computational Photography: Comprehensive Technical Audit, Core Engine Architecture, and Dual-Corner Viewfinder HUD
+### Next-Generation Computational Photography: Hardware Auto-Calibrator, Multi-Sensor Engine & Dual-Corner HUD
 
 [![Release](https://img.shields.io/badge/Release-VMC%208.8%20v95-brightgreen.svg?style=flat-square&logo=github)](https://github.com/Vsesmak/VMC-Camera-Release/releases/tag/v95)
-[![Build](https://img.shields.io/badge/Build-66263637-blue.svg?style=flat-square)](https://github.com/Vsesmak/VMC-Camera-Release)
-[![License](https://img.shields.io/badge/License-Proprietary%20Source--Available-purple.svg?style=flat-square)](LICENSE)
-[![Android](https://img.shields.io/badge/Android-10%20--%2015-3DDC84.svg?style=flat-square&logo=android&logoColor=white)](https://developer.android.com)
-[![Base Engine](https://img.shields.io/badge/Base-Google%20Camera%208.8.224-4285F4.svg?style=flat-square&logo=google&logoColor=white)](https://www.celsoazevedo.com/files/android/google-camera/)
-[![GCam Hub](https://img.shields.io/badge/GCam%20Hub-Celso%20Azevedo-008080.svg?style=flat-square&logo=googlechrome&logoColor=white)](https://www.celsoazevedo.com/files/android/google-camera/)
-[![Target Lineup](https://img.shields.io/badge/Lineup-Google%20Pixel%20%7C%20Snapdragon-EA4335.svg?style=flat-square&logo=googlepixel&logoColor=white)](https://store.google.com/category/phones)
-[![SoC Platform](https://img.shields.io/badge/Qualcomm-Snapdragon%20865%20--%208%20Gen%203-FF7900.svg?style=flat-square&logo=qualcomm&logoColor=white)](https://qualcomm.com)
-[![Hardware Acceleration](https://img.shields.io/badge/DSP%20%2F%20NPU-Hexagon%20HVX%20%7C%20QNN%20HTP-E01A22.svg?style=flat-square&logo=qualcomm&logoColor=white)](https://developer.qualcomm.com)
-[![Vector SIMD](https://img.shields.io/badge/Compute-ARM64%20NEON-0091BD.svg?style=flat-square&logo=arm&logoColor=white)](https://www.arm.com/technologies/neon)
-[![Sensors Support](https://img.shields.io/badge/Sensors-Sony%20Exmor%20RS%20%7C%20Samsung%20ISOCELL-000000.svg?style=flat-square&logo=sony&logoColor=white)](https://sony-semicon.com)
-[![Color Tuning](https://img.shields.io/badge/Color%20Science-Leica%20Authentic%20%7C%20P3-E20613.svg?style=flat-square&logo=leica&logoColor=white)](https://leica-camera.com)
-[![Compression](https://img.shields.io/badge/JPEG%20Engine-Mozilla%20MozJPEG-FF7139.svg?style=flat-square&logo=mozilla&logoColor=white)](https://github.com/mozilla/mozjpeg)
-[![Super Resolution](https://img.shields.io/badge/Super--Res-Google%20Sabre%20%7C%20Lanczos-34A853.svg?style=flat-square&logo=google&logoColor=white)](https://ai.googleblog.com/2018/10/see-better-and-further-with-super-res.html)
+[![Build](https://img.shields.io/badge/Build-66263637-blue.svg?style=flat-square)](https://github.com/Vsesmak/VMC-Camera-Release/releases/latest)
+[![Android](https://img.shields.io/badge/Android-10--15-3DDC84.svg?style=flat-square&logo=android&logoColor=white)](https://developer.android.com)
+[![DSP / NPU](https://img.shields.io/badge/DSP%20%2F%20NPU-Hexagon%20HVX%20%7C%20QNN%20HTP-E01A22.svg?style=flat-square&logo=qualcomm&logoColor=white)](https://developer.qualcomm.com)
+[![License](https://img.shields.io/badge/License-Source--Available-purple.svg?style=flat-square)](LICENSE)
 
-🌐 **Language / Язык:** **[English](README.md)** | **[Русский](README_RU.md)**
+🌐 **English** | **[Русский](docs/README_RU.md)** · 📋 **[Changelog (v93–v95)](docs/releases/CHANGELOG_v93_to_v95_EN.md)** · 📖 **[Author's Manifesto](docs/WHY_VMC_EN.md)** · 📦 **[Download APKs](https://github.com/Vsesmak/VMC-Camera-Release/releases/latest)**
 
 **VMC (Vseslav Makarov Camera)** is a high-performance software-hardware computational photography suite for the Android operating system. The project originated as a deep architectural overhaul of the **LMC (Hasli) 8.8 mod (Google Camera 8.8.224 fix by Hasli)** and, through 95 rigorous engineering iterations, evolved into an independent camera platform featuring a closed-loop hardware auto-calibrator, direct DSP/NPU compute core addressing, and an industry-first dual-corner viewfinder control interface.
 
@@ -24,8 +15,8 @@ I really liked how the HDR++ algorithm worked in the BSG mods (version 5.1). Wit
 
 All photographs produced by the application embed an authoritative digital signature in the EXIF metadata: `Camera by Vseslav Makarov`.
 
-> 📖 **Author's Manifesto:** [Why Stock OEM Cameras Hit a Dead End and How VMC Was Built (Read Article)](WHY_VMC_EN.md) — detailing months of low-level debugging, eliminating hex-patching, and revolutionizing in-viewfinder frame physics control.  
-> 🇷🇺 **Русская версия манифеста:** [Почему штатные камеры зашли в тупик и как создавался VMC](WHY_VMC.md).
+> 📖 **Author's Manifesto:** [Why Stock OEM Cameras Hit a Dead End and How VMC Was Built (Read Article)](docs/WHY_VMC_EN.md) — detailing months of low-level debugging, eliminating hex-patching, and revolutionizing in-viewfinder frame physics control.  
+> 🇷🇺 **Русская версия манифеста:** [Почему штатные камеры зашли в тупик и как создавался VMC](docs/WHY_VMC.md).
 
 ### 🌐 Technology Ecosystem & Lineage
 | Domain / Vendor | Technology / Project | Role & Implementation in VMC |
@@ -38,7 +29,7 @@ All photographs produced by the application embed an authoritative digital signa
 | **Sony Semiconductor** | **Sony Exmor RS (IMX / LYT)** | Dedicated Noise Model calibration, customized Dynamic Black Level matrices |
 | **Samsung Semiconductor**| **Samsung ISOCELL (GN / HP / JN)** | Adaptive NME noise profiling, lateral chromatic aberration and vignetting correction |
 | **Leica Camera AG** | **Leica Authentic Curve & Tone** | Mathematical contrast curve model (-0.67 EV) for cinematic, roll-off shadow depth |
-| **Mozilla Foundation** | **MozJPEG Engine** | Trellis quantization, optimized Huffman tables, maximum perceptual detail without artifacts |
+| **libjpeg-turbo Project** | **libjpeg-turbo 3.2.1 NEON** | Lossless Huffman entropy optimization & fast ARM64 NEON JPEG decoding/transcoding |
 
 ---
 
@@ -315,7 +306,7 @@ Traditional GCam mods rely on static XML lookup tables. VMC pioneers real-time c
 
 ## 🚀 Installation & Quick Start
 
-1. Download **`VMC8.8_v95_obf.apk`** (or an OEM-whitelisted obfuscated variant: `VMC8.8_v95_snapcam_obf.apk` / `_aweme_obf.apk` / `_qcamera3_obf.apk` for Realme/OPPO/OnePlus, `_ruler_obf.apk` / `_scan3d_obf.apk` for Samsung, or `_glens_obf.apk`) from [Releases](https://github.com/Vsesmak/VMC-Camera-Release/releases/latest).
+1. Download **`VMC8.8_v95_obf.apk`** (or an OEM-whitelisted package variant: `VMC8.8_v95_snapcam_obf.apk` / `_aweme_obf.apk` / `_qcamera3_obf.apk` for Realme/OPPO/OnePlus, `_ruler_obf.apk` / `_scan3d_obf.apk` for Samsung, or `_glens_obf.apk`) from [Releases](https://github.com/Vsesmak/VMC-Camera-Release/releases/latest).
 2. Install the APK on your device (package `com.google.android.vmcamera` installs alongside existing GCam ports without conflict).
 3. Grant required permissions (Camera, Microphone, Location, Storage).
 4. Copy XML profiles from `configs/` to `/sdcard/LMC8.8/` on your device's internal storage.

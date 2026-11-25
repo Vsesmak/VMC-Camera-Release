@@ -4,7 +4,7 @@
 
 ## v95 (November 25, 2026) — `versionCode 66263637`
 
-### Published R8-Obfuscated Release APKs (7 APKs, Single Keystore `1e08a903...`, `323.2 MB` each, R8 8.6.2)
+### Published Release APKs (7 Variants, Single Keystore `1e08a903...`, `323.2 MB` each)
 - `VMC8.8_v95_obf.apk` (`com.google.android.vmcamera`) — `SHA-256: CEBD07C2F90B02B720E70E8DDE34EE168F015650B48839F016347405225C0566`
 - `VMC8.8_v95_snapcam_obf.apk` (`org.codeaurora.snapcam`) — `SHA-256: B22D1D95436C0FF54DAF31AAA5280A233BEBDFB33209E7A711CC4691FB8EF290`
 - `VMC8.8_v95_aweme_obf.apk` (`com.ss.android.ugc.aweme`) — `SHA-256: D571380EC5223BA98D7E18041F87E8499AFADDBFFE9B64D9F5FA76E019E4EBA3`
