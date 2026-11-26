@@ -15,7 +15,7 @@
 
 🌐 **English** | **[Русский](README_RU.md)** · 📋 **[Changelog (v95–v97)](releases/CHANGELOG_v95_to_v97_EN.md)** · 📖 **[Author's Manifesto](WHY_VMC_EN.md)** · 📦 **[Download APKs](https://github.com/Vsesmak/VMC-Camera-Release/releases/latest)**
 
-**VMC (Vseslav Makarov Camera)** is a high-performance software-hardware computational photography suite for the Android operating system. The project originated as a deep architectural overhaul of the **LMC (Hasli) 8.8 mod (Google Camera 8.8.224 fix by Hasli)** and, through 97 rigorous engineering iterations, evolved into an independent camera platform featuring a closed-loop hardware auto-calibrator, direct DSP/NPU/MediaTek compute addressing, NEON JPEG highlight/vibrance post-processing, and an industry-first dual-corner viewfinder control interface.
+**VMC (Vseslav Makarov Camera)** is a high-performance software-hardware computational photography suite for the Android operating system. The project originated as a deep architectural overhaul of the **LMC (Hasli) 8.8 mod (Google Camera 8.8.224 fix by Hasli)** and, through 97 rigorous engineering iterations, evolved into an independent camera platform featuring a hardware-first per-lens auto-calibrator, direct DSP/NPU/MediaTek compute addressing, NEON JPEG highlight/vibrance post-processing, and an industry-first dual-corner viewfinder control interface.
 
 I really liked how the HDR++ algorithm (#google-camera) worked in the BSG mods (version 5.1). With all due respect to BSG, my own work is inspired by that wonderful era (2018–2020) a time when you could simply install an APK, toggle the HDR+ switch, make a few minor adjustments, and end up with a masterpiece. This is likely due to the tone-mapping model used in Google’s GCam 2 and 3 (#google). It’s striking that photos taken on the latest Google Pixel (#pixel) phones now often look flat and gray, whereas, back in the early days of computational photography, they were remarkable for their depth and color.
 
@@ -144,82 +144,54 @@ For the first time in Google Camera ports and mobile imaging applications, essen
 
 #### 📍 Top-Right Corner — Analytics Overlay, HEX/CPU Indicator & Professional Quick-Settings Curtain:
 
-1. **Dynamic Hardware Acceleration Indicator (`HEX` vs `CPU`):**
-   * Real-time in-viewfinder display of the active computational execution core:
+1. **Dynamic Hardware & Platform Indicator (`HEX` / `CPU` / `Mediatek`):**
+   * Real-time in-viewfinder display of the active computational execution path:
      * **`HEX` (`kHexagon`):** Hardware processing on Qualcomm Hexagon DSP (HVX) via FastRPC. Delivers maximal burst merge throughput, minimal power consumption, and zero thermal throttling.
-     * **`CPU` (`kCpu`):** Software fallback to Kryo/Oryon CPU cores. Instantly alerts the user of DSP queue saturation or driver incompatibility.
-   * Auxiliary coprocessor status: `QNN HTP v75` (Snapdragon 8 Gen 3 NPU) and TurboJPEG NEON SIMD hardware decoder.
+     * **`CPU` (`kCpu`):** Software fallback to host CPU cores, alerting the photographer if DSP offloading is unavailable.
+     * **`Mediatek` (Purple Badge):** Automatically activated on MediaTek Dimensity / Helio platforms together with byte-verified **Sabre MTK** runtime initialization.
+   * Auxiliary coprocessor & library stack: `QNN HTP v75`, `ONNX Runtime 1.29`, `TFLite 2.16`, and `TurboJPEG 3.2.1 NEON SIMD`.
 
 2. **HDR+ Enhanced Processing Readiness Indicator:**
-   * Real-time monitoring of the Zero Shutter Lag (ZSL) ring buffer depth and frame queue allocation in system RAM.
-   * Dynamic readiness marker for heavy multi-frame burst capture (15–36 RAW frames) without shutter lag or queue drop risk.
+   * Real-time monitoring of the frame merge queue and HDR++ readiness across active lenses.
 
-3. **Live Denoise Monitoring & In-Flight Gain Adjustment:**
-   * Continuous monitoring of spatial ($G_{spatial}$) and temporal ($G_{temporal}$) noise suppression coefficients.
-   * Real-time in-viewfinder slider to adjust Luma and Chroma noise reduction on the fly without restarting the Camera2 capture session.
+3. **Live Denoise Monitoring & Adaptive ISO Control:**
+   * Adaptive ISO tiering (`<400` weak, `400–1600` medium, `1600+` strong) and direct in-viewfinder overrides for spatial/temporal smoothing.
 
-4. **Hot-Swappable Tone-Mapping Model:**
-   * Seamless in-flight switching between dynamic range transfer curves without pipeline reinitialization:
-     * **`HDRnet Neural`:** Google's adaptive neural network tone compensation with local tone mapping.
-     * **`Filmic Tone-Curve`:** Cinematic S-curve highlight roll-off with rich mid-tone contrast.
-     * **`Reinhard Extended`:** Classic exponential high-dynamic-range tone mapping.
-     * **`ACES / Rec.709 Spline`:** Motion-picture industry color adaptation standard with natural skin-tone gradations.
+4. **Tone-Mapping & Cupertino SmartTone Selector:**
+   * Native GCam curve profiles (`AI HDRnet`, `GCam 9.x Ultra HDR / Deep Black / Natural`, `GCam 5.1 Film`, `Stock 8.8`) write `_StartTone` / `_StartGamma` LUTs directly with clean camera session reload.
+   * **`Cupertino SmartTone`:** Instant ARM64 NEON S-curve contrast and wide-gamut tone reproduction running directly at JPEG save with zero restart.
 
-5. **Hot-Swappable Color Space Engine:**
-   * Instant color gamut selection during composition:
-     * **`DCI-P3 (Wide Color Gamut)`** / **`Display P3`** — extended cinematic color space for modern flagship displays with deep spectral hues.
-     * **`sRGB`** — standard web color space for broad compatibility.
-     * **`Rec.2020`** — next-generation ultra-wide broadcast gamut.
-   * Automatic per-frame chromatic adaptation transform (Bradford CAT / CAT02).
+5. **Color Space & Live Chroma Vibrance Engine:**
+   * Instant switching between **`sRGB`** and **`DCI-P3 (Display P3)`** (writing EXIF Tag `0xA001 = 0xFFFF` and Display P3 ICC profile) right alongside the live **`Chroma Vibrance`** cycler (`Off` ➔ `VMC Natural +22%` ➔ `Cupertino Rich +38%`).
+   * Powered by **Chroma-Gated NEON Vibrance** (`chroma > 12`) preserving neutral asphalt/concrete at 0% boost and protecting skin tones, plus selective **NEON Soft-Highlight Knee** (`luma > 212`) rescuing neon signs without darkening shadows.
 
 6. **Hot-Swappable AWB Engine:**
-   * Runtime selection between neutral point computation algorithms:
-     * **`Google Neural AWB`:** Pixel convolutional neural network white balance classifier optimized for complex mixed-light scenarios.
-     * **`Vendor Hardware ISP AWB`:** Qualcomm Spectra 3A hardware block with zero latency.
-     * **`Hybrid CCT Matrix`:** Direct calculation from raw sensor neutral points with per-frame Kelvin ($CCT$) interpolation.
+   * Direct switching between `Auto`, `Google Pixel AWB`, `Sony IMX686`, preset Kelvin modes (`~3000K` / `~5500K` / `~7000K`), `Config XML`, and `Native Camera2 ISP` relying genuinely on hardware `SENSOR_NEUTRAL_COLOR_POINT` (zero artificial AWB clamping).
 
-7. **Real-Time Color Correction & CCM Tuning:**
-   * Dynamic Color Correction Matrix ($3\times 3$ CCM) bias adjustment.
-   * Hardware neutral point clamping (`clampAwb`), completely preventing green color shifts on Sony IMX686 sensors in overcast conditions and allowing real-time saturation/chroma gain tuning.
+7. **Deep Color Calibration & Perceptual System Vibrance:**
+   * Interactive calibration for Saturation, Hardware Black Level (`64 Deep`, `32 Balanced`, `0 Stock`, `XML`), and **Perceptual System Color Vibrance** (`rowSum = 1.0` across all lenses with zero AUX double-saturation).
 
-8. **Hot-Swappable Exposure Bracketing Engine:**
-   * Professional multi-frame exposure merging subsystem:
-     * **`Auto (Adaptive Scene-Luminance)`:** Automatic exposure step calculation based on live scene dynamic range.
-     * **`Curated Presets`:** *Extreme HDR* ($\pm 2.0$ EV), *Shadow Boost* ($+1.5$ EV), *Highlight Preservation* ($-1.5$ EV).
-     * **`Parametric Manual`:** Explicit configuration of burst series count, frame depth ($N \in [3 \dots 48]$), and exposure step ($\Delta EV \in [0.33 \dots 3.0]$).
+8. **Hot-Swappable Exposure Bracketing Engine & Gyroscope Guard:**
+   * `Auto` (with real-time **Gyroscope + OIS Handheld vs. Tripod** shutter protection keeping Shasta `28008052` active), curated HDR presets (`5x3` / `3x5`), and parametric manual configuration.
 
 9. **In-Viewfinder Config Management Suite:**
-   * Eliminates the need to navigate settings menus or double-tap black viewport regions:
-     * **Embedded APK Profiles:** Instant selection of factory-tuned styles: `🧠 AI Dynamic v93`, `📷 Leica Classic`, `🎞️ GCam 5.1 FilmStyle`.
-     * **Hardware Auto-Config:** Automatic sensor and SoC detection with optimized noise and sharpness profiles.
-     * **Custom User XML Configurations:** Direct access to `/sdcard/LMC8.8/` with in-viewfinder preset switching.
+   * Instant switching between built-in XML profiles (`AI Dynamic v92`, `ClassicStyle Dynamic v92`, `GCam 5.1 FilmStyle v92`, `AI Dynamic · GCam 5.1 v92`), `Auto`, and custom user XMLs in `/sdcard/LMC8.8/`.
 
-10. **Live Spectral Analyzer & CCT Monitor:**
-    * Real-time Correlated Color Temperature ($CCT$) calculation in Kelvin derived from RAW RGGB `SENSOR_NEUTRAL_COLOR_POINT` ratios.
-    * Environment classification: `☀️ ~5500K` (Daylight/Sun), `☁️ ~7500K-9500K` (Shade/Overcast), `💡 ~3000K` (Incandescent), `⚡ ~4200K` (Fluorescent).
+10. **Full Multilingual Dual-Corner HUD (`HudI18n`):**
+    * **192-key dynamic localization dictionary** automatically translating the entire HUD and all modal dialogs synchronously with Android's system language across every APK locale.
 
-11. **RAW Burst Counter & Lifecycle Synchronization:**
-    * Real-time burst frame tracking (`acc/plan: 12/12`).
-    * Smooth automatic collapse into a minimalist status dot (`● HDR++ ▸`) or auto-hiding when native GCam settings sheets are opened.
+11. **Per-Lens Hardware-First AutoCalibrator Card & Collapsible Status:**
+    * Compact view of active hardware profiling (`Applied` vs. `Kept` summary, two-decimal `0.00 µm` pixel pitch readout) with **individual ON/OFF switches for each physical sensor**, plus one-tap HUD collapse (`● HDR++ ▾ / ▸`).
 
 ---
 
-### 1.2. Closed-Loop Hardware Auto-Calibrator
-Traditional GCam mods rely on static XML lookup tables. VMC pioneers real-time closed-loop adaptation:
-1. **Per-Frame Histogram Decomposition:**
-   * Mean luminance ($Mean\ Y$).
-   * Deep shadow clipping ($Shadow\ \% < 5\%$) and specular highlight clipping ($Highlight\ \% > 98\%$).
-   * Local microcontrast index and edge transition slope.
-   * Edge reversal and halo artifact detection ($Edge\ Reversal\ \% / Halo\ \%$).
-2. **Six Physically-Calibrated Illumination Tiers:**
-   * `bright_sun` ($EV \ge 14$, $ISO \le 80$) — Ultra-short exposures, highlight suppression.
-   * `daylight` ($EV \ 11-13$, $ISO \ 80-200$) — Balanced Lanczos sharpening.
-   * `overcast_shade` ($EV \ 8-10$, $ISO \ 200-600$) — Protection of asphalt textures and neutral gray balance.
-   * `dim_light` ($EV \ 5-7$, $ISO \ 600-1200$) — Delicate noise reduction preserving microstructures.
-   * `night_city` ($EV \ 2-4$, $ISO \ 1200-3200$) — Multi-frame burst stacking up to 21 frames.
-   * `extreme_dark` ($EV < 1$, $ISO > 3200$) — Shasta night capture with exposures up to 5 seconds.
-3. **Adaptive Highlight DRC:** Under backlit conditions ($Backlight$), automatically injects $-0.333 \dots -0.5$ EV compensation to preserve cloud textures and neon signs.
-4. **Closed-Loop Anti-Halo:** Dynamically clamps high-frequency gain on high-contrast edges without degrading fine microtextures.
+### 1.2. Hardware-First Per-Lens AutoCalibrator (Zero Scene Bias)
+Unlike fragile scene-guessing tuners that warp colors based on previous JPEG shots, VMC v96–v97 implements a clean, deterministic **Hardware-First AutoCalibrator**:
+1. **Universal Physical Camera Discovery & `<4 MP` Stub Filtering:** Scans visible and hidden Camera2 modules across brands (`Main`, `Ultrawide`, `Tele`, `Periscope`, `Front`), reads exact megapixels, pixel pitch (`%.2f µm`), OIS, RAW support, and CFA layout, and excludes `<4 MP` depth/macro stubs and virtual duplicates.
+2. **Smartphone-Only Color Matrix Matching (45 Mobile Profiles):** Assigns sensor-matched color transforms to every physical lens from a curated mobile-only catalog while keeping Perceptual System Vibrance (`rowSum = 1.0`) balanced across AUX cameras.
+3. **Smartphone-Only Noise Model Matching (429 Mobile Profiles):** Pairs each sensor with its matching mobile noise profile or falls back cleanly to live Camera2 `SENSOR_NOISE_PROFILE`.
+4. **Optics-Aware Sharpness Preservation & Shasta Guarantee:** Upgrades disabled `"0"` sharpness keys to `"1"`, **never lowers higher user/profile values** (`lib_sabre_sharp_contrast_key* > 1` and `lib_polysharp_rad_med_key* > 1` remain preserved), and strictly keeps `lib_shasta_force_key*` (`28008052`) enabled.
+5. **Validated Session OpMode, Quarantine & Instant Cold-Start Cache:** Automatically selects verified `Session OpMode` values (e.g., `61448` on K30 Pro Zoom OIS tele, Realme/OPPO/OnePlus profiles), quarantines failed configurations (`onConfigureFailed`), blocks non-Xiaomi devices from invalid `fix_resolution_key=37`, and persists `device_hardware_profile.json` unconditionally for zero-rescan cold launches. Each camera sensor can also be toggled independently ON or OFF in the AutoCalibrator menu.
 
 ---
 
@@ -329,17 +301,18 @@ The **VMC (Vseslav Makarov Camera)** software suite is distributed under a **Pro
    * **The Dual-Corner Viewfinder HUD architecture**, comprising:
      * Bottom-left direct physical sensor/optical controls (In-Sensor Zoom 1.0x–2.0x, multi-step and continuous physical variable aperture f/1.63–f/4.0 switcher, focus drive selector);
      * **Top-Right Viewfinder Advanced Control & Telemetry Suite**:
-       * Real-time hardware execution indicator (**HEX vs CPU** / Hexagon DSP FastRPC vector offload status versus CPU fallback);
+       * Real-time hardware & platform indicator (**HEX vs CPU vs purple Mediatek** badge with automatic Sabre MTK initialization);
        * HDR+ Enhanced frame accumulation queue and processing readiness indicator;
-       * Live spatial and temporal luma/chroma denoise level monitoring and in-viewfinder continuous gain adjustment;
-       * Hot-swappable tone-mapping model switcher (instantaneous selection between HDRnet, Filmic, ACES, and Reinhard curves);
-       * Hot-swappable color space engine (on-the-fly gamut selection between DCI-P3 Wide Gamut, Display P3, sRGB, Rec.2020 with CAT02 chromatic adaptation);
-       * Multi-engine White Balance computation switcher (Google Neural AWB vs Vendor ISP Spectra AWB vs Hybrid CCT matrix);
-       * Real-time Color Correction Matrix (CCM $3\times 3$) calibration and sensor neutral point clamping (`clampAwb`);
-       * Parametric exposure bracketing engine (Auto, curated dynamic range presets, and manual series with configurable frame depth and $\Delta EV$ step);
-       * In-viewfinder profile and configuration management system (embedded APK profiles, automated hardware-matched configs, and custom XML presets without exiting camera preview).
-   * **Closed-Loop Hardware Auto-Calibrator** (live histogram DRC analysis and anti-halo sharpness adaptation).
-   * **Multi-Gen Hexagon FastRPC Dispatch** (intergenerational FastRPC call translation on Qualcomm DSPs).
+       * Adaptive ISO spatial/temporal denoise monitor and quick override presets;
+       * Tone-mapping model selector (`_StartTone` / `_StartGamma` LUT writes + instant NEON **Cupertino SmartTone**);
+       * Color space & live **Chroma Vibrance** engine (`sRGB` vs `DCI-P3 / Display P3` EXIF `0xFFFF` ICC embedding + Chroma-Gated NEON Vibrance & Soft-Highlight Knee);
+       * Multi-engine White Balance switcher (`Auto`, `Google Pixel AWB`, `Sony IMX686`, `Camera2 ISP` relying on hardware `SENSOR_NEUTRAL_COLOR_POINT`);
+       * Deep Color Calibration Suite (`Perceptual System Color Vibrance` preserving `rowSum = 1.0`, Black Level `64/32/0`);
+       * Parametric exposure bracketing engine paired with real-time Gyroscope + OIS Handheld vs. Tripod shutter protection;
+       * In-viewfinder configuration manager (`AI Dynamic`, `Leica Classic`, `FilmStyle 5.1`, `Hardware Auto`, custom XML) and **HudI18n** system-language synchronization.
+   * **Hardware-First Per-Lens AutoCalibrator** (5-step physical lens profiling across 429 Mobile Noise / 45 Mobile Color models, `<4 MP` stub filtering, `>1` sharpness preservation, `onConfigureFailed` OpMode quarantine, per-lens ON/OFF switches, and cached cold-start fast path).
+   * **ARM64 NEON JPEG Post-Processing Engine (`libmakcam_turbojpeg.so`)** (selective Soft-Highlight Knee `> 212`, Chroma-Gated Vibrance protecting greys/skin tones, Cupertino SmartTone, APP2 ICC preservation, and lossless Huffman optimization).
+   * **MediaTek Sabre MTK Runtime Auto-Patch Engine** and **Multi-Gen Hexagon FastRPC / QNN HTP NPU Dispatch**.
    * **Integrated multi-step and continuous physical aperture switcher**.
 4. **Prior Art & Legal Priority:** The public commit history, releases, and cryptographic signatures in this repository constitute legally verifiable Prior Art under the Berne Convention and WIPO intellectual property treaties.
 

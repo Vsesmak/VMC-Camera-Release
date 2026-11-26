@@ -1,6 +1,6 @@
 VMC (VSESLAV MAKAROV CAMERA) PROPRIETARY SOURCE-AVAILABLE & END-USER LICENSE AGREEMENT (EULA)
 
-Version 1.0 (November 2026)
+Version 1.1 (November 2026)
 Copyright (C) 2024-2026 Vseslav Makarov (VSEMAK). All Rights Reserved.
 
 PLEASE READ THIS LICENSE CAREFULLY BEFORE DOWNLOADING, COMPILING, INSTALLING, OR USING THIS SOFTWARE. BY USING THIS SOFTWARE, YOU ACCEPT AND AGREE TO BE BOUND BY ALL TERMS AND CONDITIONS OF THIS AGREEMENT. IF YOU DO NOT AGREE, DO NOT DOWNLOAD, INSTALL, OR USE THE SOFTWARE.
@@ -28,17 +28,21 @@ THE SOFTWARE, ITS ARCHITECTURAL CONCEPTS, INTERFACES, AND ALGORITHMS ARE STRICTL
         - The Dual-Corner Viewfinder HUD architecture, comprising:
           * Direct manual sensor and optical controls located in the bottom-left corner of the live viewfinder (In-Sensor Zoom 1.0x-2.0x, multi-step and continuous physical variable aperture f/1.63-f/4.0 switcher, and focus drive selector);
           * The Top-Right Viewfinder Advanced Control & Telemetry Suite ("Правая верхняя шторка / Оверлей"), incorporating:
-            - Real-time hardware execution indicator (HEX vs CPU / Qualcomm Hexagon DSP FastRPC vector offload status versus CPU fallback);
+            - Real-time hardware execution and platform badge indicator (HEX for Qualcomm Hexagon DSP FastRPC vector offload, CPU fallback, and purple Mediatek indicator when Sabre MTK is active);
             - HDR+ Enhanced frame accumulation queue and processing readiness indicator;
-            - Live spatial and temporal luma/chroma denoise level monitoring and in-viewfinder continuous gain adjustment;
-            - Hot-swappable tone-mapping model switcher (instantaneous in-flight selection between HDRnet neural tone-curve, Filmic, ACES, and custom spline curves);
-            - Hot-swappable color space engine (on-the-fly gamut selection between DCI-P3 Wide Gamut, Display P3, sRGB, and Rec.2020 with dynamic chromatic adaptation);
-            - Multi-engine White Balance (AWB) computation switcher (runtime selection between Google Neural AWB, Vendor Hardware ISP AWB, and CCT matrix adaptation);
-            - Real-time Color Correction Matrix (CCM) calibration and sensor neutral point clamping;
-            - Parametric exposure bracketing engine (Auto-exposure bracketing, curated dynamic range presets, and manual multi-series configuration with customizable frame count N and exposure offset step Delta EV);
-            - In-viewfinder profile and configuration management system (on-the-fly switching between embedded APK profiles, automated hardware-matched configs, and custom XML presets without exiting camera preview);
-        - The Closed-Loop Hardware Auto-Calibrator with live histogram DRC analysis and anti-halo sharpness adaptation;
-        - The multi-generational Hexagon FastRPC dispatch architecture;
+            - Live spatial and temporal luma/chroma denoise mode selector and adaptive ISO tier control;
+            - Hot-swappable tone-mapping selector (native _StartTone / _StartGamma curve injection with controlled session reload, plus instant NEON-accelerated Cupertino SmartTone mode);
+            - Hot-swappable color space & live Chroma Vibrance engine (on-the-fly switching between sRGB and DCI-P3 Wide Gamut / Display P3 EXIF 0xFFFF ICC embedding paired with instant ARM64 NEON Chroma-Gated Vibrance);
+            - Multi-engine White Balance (AWB) switcher (Google Neural AWB, Sony IMX686 / Hardware Sensor profiles, Config XML, and Native Camera2 ISP with genuine SENSOR_NEUTRAL_COLOR_POINT reliance);
+            - Real-time Color Calibration Suite (Saturation presets, Hardware Black Level 64/32/0 selection, Perceptual System Color Vibrance preserving rowSum = 1.0 neutral greys without AUX double-saturation);
+            - Parametric exposure bracketing engine (Auto with Gyroscope + OIS Handheld vs. Tripod shutter guard, curated HDR presets, and manual multi-series configuration with customizable frame count and Delta EV step);
+            - In-viewfinder profile and configuration management system (on-the-fly switching between embedded APK profiles, Hardware-First AutoCalibrator profiles, and custom XML presets without exiting camera preview);
+            - Per-lens AutoCalibrator diagnostic and control panel (Applied vs. Kept summary, two-decimal sensor pixel pitch readout, and independent per-camera AutoCalibrator toggles);
+        - The Hardware-First Per-Lens AutoCalibrator architecture (5-step hardware profiling across all physical lenses, <4 MP stub camera filtering, Smartphone-Only 429 Noise / 45 Color compact model catalogs, optics-aware sharpness preservation > 1 and unconditional Shasta preservation, per-camera Session OpMode matching with onConfigureFailed quarantine recovery, non-Xiaomi fix_resolution_key=37 protection, and zero-rescan cold-start hardware caching);
+        - The ARM64 NEON JPEG Post-Processing Engine (libmakcam_turbojpeg.so inline pipeline implementing selective Soft-Highlight Knee at luma > 212 without shadow darkening, non-linear Chroma-Gated Vibrance preserving neutral greys and skin tones, Cupertino SmartTone curve transfer, APP2 ICC preservation, and lossless Huffman optimization);
+        - The MediaTek Sabre MTK Runtime Auto-Patch Engine (automatic Dimensity/Helio SoC detection, stock-byte verification, dynamic libgcastartup.so native patching, and dedicated Mediatek HUD status indicator);
+        - The multi-generational Hexagon FastRPC DSP probe & QNN HTP / ONNX Runtime / TFLite integration;
+        - The HudI18n dynamic overlay localization engine synchronizing Dual-Corner HUD and modal dialogs with active system APK locales;
         - The integrated multi-step and continuous physical aperture switcher.
 (c) Any such commercial integration, licensing, or adoption requires a separate, formal, prior written licensing agreement executed directly with Vseslav Makarov.
 
