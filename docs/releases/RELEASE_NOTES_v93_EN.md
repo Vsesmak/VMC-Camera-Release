@@ -1,5 +1,6 @@
 # Release Notes — VMC 8.8 v93
 
+🌐 **English** | **[Русский](RELEASE_NOTES_v93.md)**
 **Release Date:** November 23, 2026  
 **Application Version:** `VMC 8.8 v93`  
 **Package Identifier (Package ID):** `com.google.android.vmcamera`  

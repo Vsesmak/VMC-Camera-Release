@@ -1,5 +1,6 @@
 # VMC 8.8 Changelog (v95 → v97)
 
+🌐 **English** | **[Русский](CHANGELOG_v95_to_v97.md)**
 ☑️ **Smart Highlight Recovery & ARM64 NEON Soft-Highlight Knee (v97):** Enabled all-device native highlight protection and balanced highlight headroom (`2048`); inline NEON tone knee rescues signs and specular lights while keeping night ambiance intact
 ☑️ **TurboJPEG 3.2.1 NEON Vibrance & Cupertino SmartTone (v97):** Wired Chroma-Gated NEON Vibrance (zero grey/asphalt boost, skin protection) into JPEG output, added `Chroma Vibrance` beside `sRGB / DCI-P3`, and introduced `Cupertino SmartTone`
 ☑️ **Genuine Tonemap Curve Application (v97):** Native `_StartTone` / `_StartGamma` LUT writes with automatic camera session reload so selected tonemaps truly transform output frames

@@ -1,5 +1,6 @@
 # VMC 8.8 v96 — Release Notes (RU)
 
+🌐 **[English](RELEASE_NOTES_v96_EN.md)** | **Русский**
 **Версия:** `VMC 8.8 v96` (`versionCode: 66263638`)  
 **Дата:** 25 ноября 2026  
 

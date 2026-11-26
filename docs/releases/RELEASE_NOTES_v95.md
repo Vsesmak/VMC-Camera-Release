@@ -1,5 +1,6 @@
 # VMC 8.8 v95 (Vseslav Makarov Camera) — Release Notes
 
+🌐 **[English](RELEASE_NOTES_v95_EN.md)** | **Русский**
 **Версия:** `VMC 8.8 v95` (`versionCode: 66263637`)  
 **Дата:** 25 ноября 2026 г.  
 

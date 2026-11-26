@@ -1,5 +1,6 @@
 # Полный Changelog VMC 8.8: от v93 до v95
 
+🌐 **[English](CHANGELOG_v93_to_v95_EN.md)** | **Русский**
 ---
 
 ## v95 (25 ноября 2026) — `versionCode 66263637`

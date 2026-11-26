@@ -1,5 +1,6 @@
 # VMC 8.8 Changelog (v93 → v96)
 
+🌐 **English** | **[Русский](CHANGELOG_v93_to_v96.md)**
 ☑️ **Hardware-First AutoCalibrator with Zero Scene Bias (v96):** Completely removed legacy JPEG feedback and scene-based parameter overrides (`observePhoto`, `photoCalibration`, `isIndoorOrWarmScene`, background JPEG analysis). AutoCalibrator now performs strictly 5 hardware tasks: camera discovery, color & noise matching for all lenses, optics-aware detail calibration, and per-camera `Session OpMode` selection
 ☑️ **Preserved High Micro-Contrast (v96):** Optics-aware detail calibration upgrades disabled `"0"` values of `lib_sabre_sharp_contrast_key*` and `lib_polysharp_rad_med_key*` to `"1"`, while strictly preserving any higher user/profile values (`> 1`)
 ☑️ **Smartphone-Only Noise & Color Catalogs (v96):** Removed all DSLR/mirrorless camera entries (Canon, Nikon, Fujifilm, Sony Alpha, etc.) and curated 429 smartphone noise models + 45 mobile color matrices (2020–2026 flagships)
