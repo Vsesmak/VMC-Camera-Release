@@ -1,21 +1,21 @@
 # VMC (Vseslav Makarov Camera) 8.8
 ### Next-Generation Computational Photography: Hardware Auto-Calibrator, Multi-Sensor Engine & Dual-Corner HUD
 
-[![Release](https://img.shields.io/badge/Release-VMC%208.8%20v96-brightgreen.svg?style=flat-square&logo=github)](https://github.com/Vsesmak/VMC-Camera-Release/releases/tag/v96)
-[![Build](https://img.shields.io/badge/Build-66263638-blue.svg?style=flat-square)](https://github.com/Vsesmak/VMC-Camera-Release/releases/latest)
+[![Release](https://img.shields.io/badge/Release-VMC%208.8%20v97-brightgreen.svg?style=flat-square&logo=github)](https://github.com/Vsesmak/VMC-Camera-Release/releases/tag/v97)
+[![Build](https://img.shields.io/badge/Build-66263639-blue.svg?style=flat-square)](https://github.com/Vsesmak/VMC-Camera-Release/releases/latest)
 [![Android](https://img.shields.io/badge/Android-10--15%20%7C%20arm64--v8a-3DDC84.svg?style=flat-square&logo=android&logoColor=white)](https://developer.android.com)
-[![DSP / NPU](https://img.shields.io/badge/DSP%20%2F%20NPU-Hexagon%20HVX%20%7C%20QNN%20HTP%202.8.0-E01A22.svg?style=flat-square&logo=qualcomm&logoColor=white)](https://developer.qualcomm.com)
+[![DSP / NPU](https://img.shields.io/badge/DSP%20%2F%20NPU-Hexagon%20HVX%20%7C%20Sabre%20MTK%20%7C%20QNN%20HTP-E01A22.svg?style=flat-square&logo=qualcomm&logoColor=white)](https://developer.qualcomm.com)
 [![ONNX Runtime](https://img.shields.io/badge/AI%20Runtime-ONNX%20Runtime%201.29.0-005CED.svg?style=flat-square)](https://onnxruntime.ai)
 [![TurboJPEG](https://img.shields.io/badge/JPEG-libjpeg--turbo%203.2.1%20NEON-FF6F00.svg?style=flat-square)](https://libjpeg-turbo.org)
 [![Brotli](https://img.shields.io/badge/Compression-Brotli%201.2.1-00897B.svg?style=flat-square)](https://github.com/google/brotli)
-[![Pipeline](https://img.shields.io/badge/Pipeline-HDR%2B%2B%20%7C%20Sabre%20%7C%20Shasta%20%7C%20Lanczos3-5E35B1.svg?style=flat-square)](#)
+[![Pipeline](https://img.shields.io/badge/Pipeline-HDR%2B%2B%20%7C%20Sabre%20%7C%20Shasta%20%7C%20SmartTone-5E35B1.svg?style=flat-square)](#)
 [![Catalogs](https://img.shields.io/badge/Models-429%20Noise%20%7C%2045%20Color%20(Mobile)-0097A7.svg?style=flat-square)](#)
-[![AutoCalibrator](https://img.shields.io/badge/Calibration-Hardware--First%205--Step-2E7D32.svg?style=flat-square)](#)
+[![AutoCalibrator](https://img.shields.io/badge/Calibration-Hardware--First%20Per--Lens-2E7D32.svg?style=flat-square)](#)
 [![License](https://img.shields.io/badge/License-Source--Available-purple.svg?style=flat-square)](LICENSE)
 
-🌐 **English** | **[Русский](docs/README_RU.md)** · 📋 **[Changelog (v93–v96)](docs/releases/CHANGELOG_v93_to_v96_EN.md)** · 📖 **[Author's Manifesto](docs/WHY_VMC_EN.md)** · 📦 **[Download APKs](https://github.com/Vsesmak/VMC-Camera-Release/releases/latest)**
+🌐 **English** | **[Русский](docs/README_RU.md)** · 📋 **[Changelog (v95–v97)](docs/releases/CHANGELOG_v95_to_v97_EN.md)** · 📖 **[Author's Manifesto](docs/WHY_VMC_EN.md)** · 📦 **[Download APKs](https://github.com/Vsesmak/VMC-Camera-Release/releases/latest)**
 
-**VMC (Vseslav Makarov Camera)** is a high-performance software-hardware computational photography suite for the Android operating system. The project originated as a deep architectural overhaul of the **LMC (Hasli) 8.8 mod (Google Camera 8.8.224 fix by Hasli)** and, through 96 rigorous engineering iterations, evolved into an independent camera platform featuring a closed-loop hardware auto-calibrator, direct DSP/NPU compute core addressing, and an industry-first dual-corner viewfinder control interface.
+**VMC (Vseslav Makarov Camera)** is a high-performance software-hardware computational photography suite for the Android operating system. The project originated as a deep architectural overhaul of the **LMC (Hasli) 8.8 mod (Google Camera 8.8.224 fix by Hasli)** and, through 97 rigorous engineering iterations, evolved into an independent camera platform featuring a closed-loop hardware auto-calibrator, direct DSP/NPU/MediaTek compute addressing, NEON JPEG highlight/vibrance post-processing, and an industry-first dual-corner viewfinder control interface.
 
 I really liked how the HDR++ algorithm worked in the BSG mods (version 5.1). With all due respect to BSG, my own work is inspired by that wonderful era (2018–2020) a time when you could simply install an APK, toggle the HDR+ switch, make a few minor adjustments, and end up with a masterpiece. This is likely due to the tone-mapping model used in Google’s GCam 2 and 3. It’s striking that photos taken on the latest Google Pixel phones now often look flat and gray, whereas, back in the early days of computational photography, they were remarkable for their depth and color.
 
@@ -312,7 +312,7 @@ Traditional GCam mods rely on static XML lookup tables. VMC pioneers real-time c
 
 ## 🚀 Installation & Quick Start
 
-1. Download **`VMC8.8_v95_vmcamera_obf.apk`** (or an OEM-whitelisted package variant: `VMC8.8_v95_snapcam_obf.apk` / `_aweme_obf.apk` / `_qcamera3_obf.apk` for Realme/OPPO/OnePlus, `_ruler_obf.apk` / `_scan3d_obf.apk` for Samsung, or `_glens_obf.apk`) from [Releases](https://github.com/Vsesmak/VMC-Camera-Release/releases/latest).
+1. Download **`VMC8.8_v97_vmcamera_obf.apk`** (or an OEM-whitelisted package variant: `VMC8.8_v97_snapcam_obf.apk` / `_aweme_obf.apk` / `_qcamera3_obf.apk` for Realme/OPPO/OnePlus, `_ruler_obf.apk` / `_scan3d_obf.apk` for Samsung, or `_glens_obf.apk`) from [Releases](https://github.com/Vsesmak/VMC-Camera-Release/releases/latest).
 2. Install the APK on your device (package `com.google.android.vmcamera` installs alongside existing GCam ports without conflict).
 3. Grant required permissions (Camera, Microphone, Location, Storage).
 4. Copy XML profiles from `configs/` to `/sdcard/LMC8.8/` on your device's internal storage.
