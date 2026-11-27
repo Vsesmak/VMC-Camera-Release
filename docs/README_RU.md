@@ -1,21 +1,21 @@
 # VMC (Vseslav Makarov Camera) 8.8
 ### Вычислительная фотография нового поколения: аппаратный автокалибратор, мульти-сенсорный движок и Dual-Corner HUD
 
-[![Release](https://img.shields.io/badge/Release-VMC%208.8%20v97-brightgreen.svg?style=flat-square&logo=github)](https://github.com/Vsesmak/VMC-Camera-Release/releases/tag/v97)
-[![Build](https://img.shields.io/badge/Build-66263639-blue.svg?style=flat-square)](https://github.com/Vsesmak/VMC-Camera-Release/releases/latest)
-[![Android](https://img.shields.io/badge/Android-10--15%20%7C%20arm64--v8a-3DDC84.svg?style=flat-square&logo=android&logoColor=white)](https://developer.android.com)
-[![DSP / NPU](https://img.shields.io/badge/DSP%20%2F%20NPU-Hexagon%20HVX%20%7C%20Sabre%20MTK%20%7C%20QNN%20HTP-E01A22.svg?style=flat-square&logo=qualcomm&logoColor=white)](https://developer.qualcomm.com)
+[![Release](https://img.shields.io/badge/Release-VMC%208.8%20v98-brightgreen.svg?style=flat-square&logo=github)](https://github.com/Vsesmak/VMC-Camera-Release/releases/tag/v98)
+[![Build](https://img.shields.io/badge/Build-66263640-blue.svg?style=flat-square)](https://github.com/Vsesmak/VMC-Camera-Release/releases/latest)
+[![Android](https://img.shields.io/badge/Android-10--16%20%7C%20arm64--v8a-3DDC84.svg?style=flat-square&logo=android&logoColor=white)](https://developer.android.com)
+[![DSP / NPU](https://img.shields.io/badge/DSP%20%2F%20NPU-Hexagon%20HVX%20%7C%20Sabre%20MTK%20%7C%20Exynos%20%7C%20QNN-E01A22.svg?style=flat-square&logo=qualcomm&logoColor=white)](https://developer.qualcomm.com)
 [![ONNX Runtime](https://img.shields.io/badge/AI%20Runtime-ONNX%20Runtime%201.29.0-005CED.svg?style=flat-square)](https://onnxruntime.ai)
-[![TurboJPEG](https://img.shields.io/badge/JPEG-libjpeg--turbo%203.2.1%20NEON-FF6F00.svg?style=flat-square)](https://libjpeg-turbo.org)
+[![TurboJPEG](https://img.shields.io/badge/JPEG-libjpeg--turbo%203.2.1%20GLES3%2BNEON-FF6F00.svg?style=flat-square)](https://libjpeg-turbo.org)
 [![Brotli](https://img.shields.io/badge/Compression-Brotli%201.2.1-00897B.svg?style=flat-square)](https://github.com/google/brotli)
 [![Pipeline](https://img.shields.io/badge/Pipeline-HDR%2B%2B%20%7C%20Sabre%20%7C%20Shasta%20%7C%20SmartTone-5E35B1.svg?style=flat-square)](#)
 [![Catalogs](https://img.shields.io/badge/Models-429%20Noise%20%7C%2045%20Color%20(Mobile)-0097A7.svg?style=flat-square)](#)
 [![AutoCalibrator](https://img.shields.io/badge/Calibration-Hardware--First%20Per--Lens-2E7D32.svg?style=flat-square)](#)
 [![License](https://img.shields.io/badge/License-Source--Available-purple.svg?style=flat-square)](../LICENSE)
 
-🌐 **[English](../README.md)** | **Русский** · 📋 **[Changelog (v95–v97)](releases/CHANGELOG_v95_to_v97.md)** · 📖 **[Манифест автора](WHY_VMC.md)** · 📦 **[Скачать APK](https://github.com/Vsesmak/VMC-Camera-Release/releases/latest)**
+🌐 **[English](../README.md)** | **Русский** · 📋 **[Changelog (v95–v98)](releases/CHANGELOG_v95_to_v98.md)** · 📖 **[Манифест автора](WHY_VMC.md)** · 📦 **[Скачать APK](https://github.com/Vsesmak/VMC-Camera-Release/releases/latest)**
 
-**VMC (Vseslav Makarov Camera)** — высокопроизводительный программно-аппаратный комплекс мобильной фотографии для операционной системы Android. Проект зародился как глубокая переработка оригинального мода **LMC (Hasli) 8.8 (Google Camera 8.8.224 fix от Hasli)** и за 97 итераций инженерной разработки эволюционировал в самостоятельную камерную платформу с аппаратным пообъективным автокалибратором, поддержкой Qualcomm HVX / QNN HTP / MediaTek Sabre MTK, потоковой NEON-обработкой светов и цвета в JPEG и уникальным двухугольным интерфейсом управления прямо в видоискателе.
+**VMC (Vseslav Makarov Camera)** — высокопроизводительный программно-аппаратный комплекс мобильной фотографии для операционной системы Android. Проект зародился как глубокая переработка оригинального мода **LMC (Hasli) 8.8 (Google Camera 8.8.224 fix от Hasli)** и за 98 итераций инженерной разработки эволюционировал в самостоятельную камерную платформу с аппаратным пообъективным автокалибратором, поддержкой Qualcomm HVX / QNN HTP / MediaTek Sabre MTK / Samsung Exynos Sabre, потоковым OpenGL ES 3.0 GPU-шейдером и ARM64 NEON-обработкой светов/цвета/ХА в JPEG и уникальным двухугольным интерфейсом управления прямо в видоискателе.
 
 Мне очень понравилось, как работал алгоритм HDR++ в модах BSG версии 5.1. Со всем уважением к BSG - мои результаты работы вдохновлены тем прекрасным временем (2018-2020 год) - Когда ты просто устанавливал апк, переключал включатель в положение HDR++, делал минимальную настройку и получал шедевры. Вероятно это связано с тонмап моделью Google Pixel 2 и 3 - удивительно что сейчас на последних Google Pixel снимки плоские и серые, в то время как в начале вычислительной фотографии они поражали объёмом и цветом
 
@@ -283,7 +283,7 @@ flowchart TD
 
 ## 🚀 Установка и быстрый старт
 
-1. Скачайте файл **`VMC8.8_v97_vmcamera_obf.apk`** (или пакет для разблокировки AUX на Realme/OPPO/OnePlus — `_snapcam_obf` / `_aweme_obf` / `_qcamera3_obf`, для Samsung — `_ruler_obf` / `_scan3d_obf`, а также `_glens_obf`) со страницы [Releases](https://github.com/Vsesmak/VMC-Camera-Release/releases/latest).
+1. Скачайте файл **`VMC8.8_v98_vmcamera_obf.apk`** (или пакет для разблокировки AUX на Realme/OPPO/OnePlus — `_snapcam_obf` / `_aweme_obf` / `_qcamera3_obf`, для Samsung — `_ruler_obf` / `_scan3d_obf`, а также `_glens_obf`) со страницы [Releases](https://github.com/Vsesmak/VMC-Camera-Release/releases/latest).
 2. Установите APK на смартфон (пакет `com.google.android.vmcamera` устанавливается независимо и не конфликтует с другими версиями GCam).
 3. Предоставьте все запрашиваемые разрешения (Камера, Микрофон, Местоположение, Хранилище).
 4. Скопируйте XML-конфигурации из папки `configs/` в директорию `/sdcard/LMC8.8/` на внутренней памяти телефона.
@@ -299,20 +299,20 @@ flowchart TD
 2. **Категорический запрет коммерческого использования:** Запрещена любая коммерческая дистрибуция, продажа, монетизация или включение приложения в платные пакеты услуг.
 3. **Запрет заимствования для OEM-производителей смартфонов:** Производителям мобильных устройств (OEM), вендорам прошивок и коммерческим разработчикам камер **прямо запрещается** копировать, воспроизводить, запатентовывать или внедрять в свои коммерческие продукты следующие авторские архитектурные решения:
    * **Архитектура интерфейса Dual-Corner Viewfinder HUD**, включающая:
-     * Органы прямого ручного контроля сенсора и оптики в левом нижнем углу видоискателя (In-Sensor Zoom 1.0x–2.0x, дискретный и непрерывный селектор переменной диафрагмы f/1.63–f/4.0, селектор фокусного привода).
+     * Органы прямого ручного контроля сенсора и оптики в левом нижнем углу видоискателя (In-Sensor Zoom 1.0x–2.0x, дискретный и непрерывный селектор переменной диафрагмы f/1.63–f/4.0, селектор биннинга `4 в 1 / 9 в 1 / Авто` для сенсоров `>=108 Мп`, кнопка коррекции хроматических аберраций `ChromaticSwitcher`, селектор фокуса и ручной коррекции экспозиции `EVSwitcher`).
      * **Профессиональный комплекс правого верхнего меню и оверлея (Top-Right Advanced Control & Telemetry Suite)**:
-       * Динамический индикатор аппаратного ускорения и платформы (**HEX / CPU / фиолетовый Mediatek** с автоинициализацией Sabre MTK);
+       * Динамический индикатор аппаратного ускорения и платформы (**HEX / CPU / фиолетовый Mediatek / оранжевый Exynos** с автоинициализацией Sabre);
        * Индикатор готовности к созданию HDR+ Enhanced (мониторинг очереди накопления и стека кадров);
-       * Адаптивное ступенчатое регулирование и выбор уровней шумоподавления (Luma / Chroma) прямо из HUD;
-       * Переключатель Tonemap-моделей (прямая запись нативных таблиц `_StartTone` / `_StartGamma` + мгновенный NEON-режим **Cupertino SmartTone**);
-       * Переключатель цветового пространства и **Chroma Vibrance** (`sRGB` vs `DCI-P3 / Display P3` с EXIF `0xFFFF` + Chroma-Gated NEON Vibrance и Soft-Highlight Knee);
-       * Горячая смена режима баланса белого (`Авто`, `Google Pixel AWB`, `Sony IMX686`, `Camera2 ISP` на базе аппаратного `SENSOR_NEUTRAL_COLOR_POINT`);
+       * Адаптивное ступенчатое регулирование и выбор уровней шумоподавления (`Denoise`, синхронизированный с нативным LibPatcher) прямо из HUD;
+       * Переключатель Tonemap-моделей (прямая запись нативных таблиц `_StartTone` / `_StartGamma` + мгновенный GPU/NEON-режим **Cupertino SmartTone**);
+       * Переключатель цветового пространства и **Chroma Vibrance** (`sRGB` vs `DCI-P3 / Display P3` с EXIF `0xFFFF` + Chroma-Gated GPU/NEON Vibrance и Soft-Highlight Knee);
+       * Горячая смена режима баланса белого (`Авто`, `Google Pixel AWB`, `Hardware Sensor DNG`, `Camera2 ISP` на базе аппаратного `SENSOR_NEUTRAL_COLOR_POINT`);
        * Диалог глубокой цветовой калибровки (`Perceptual System Color Vibrance` с `rowSum = 1.0`, аппаратный уровень чёрного `64/32/0`);
-       * Экспозиционный брекетинг (Авто с гироскоп-охранником выдержки с рук/штатива, пресеты и параметрический ручной режим);
-       * Интегрированный менеджер профилей (`AI Dynamic`, `Leica Classic`, `FilmStyle 5.1`, `Hardware Auto`, кастомные XML) и система автоперевода **HudI18n** (192 ключа).
-   * **Hardware-First Per-Lens AutoCalibrator** (5-шаговое профилирование всех физических камер, каталоги 429 Noise / 45 Color только для смартфонов, отсев заглушек `<4 Мп`, сохранение высокой резкости `> 1`, автокарантин сбойных OpMode, пообъективные тумблеры и мгновенный кэшированный холодный старт).
-   * **Потоковый движок пост-обработки ARM64 NEON в JPEG (`libmakcam_turbojpeg.so`)** (селективный Soft-Highlight Knee `> 212`, Chroma-Gated Vibrance с защитой серого и кожи, Cupertino SmartTone, сохранение APP2 ICC и lossless-оптимизация Хаффмана).
-   * **MediaTek Sabre MTK Runtime Auto-Patch Engine** и **Multi-Gen Hexagon FastRPC / QNN HTP NPU Dispatch**.
+       * Экспозиционный брекетинг (Авто с гироскоп-охранником выдержки с рук `33–50 мс` против штатива, разблокированная Shasta-склейка в ярком свете, пресеты и параметрический ручной режим);
+       * Интегрированный менеджер профилей (`AI Dynamic`, `Leica Classic`, `FilmStyle 5.1`, `Hardware Auto`, кастомные XML) и полная система автоперевода **12 языков `HudI18n` + `menu_i18n`** (`ru, uk, be, en, zh, hi, fr, de, ja, es, it, pt`).
+   * **Hardware-First Per-Lens AutoCalibrator** (5-шаговое профилирование всех физических камер, каталоги 429 Noise / 45 Color только для смартфонов, динамическое чтение `4:3` разрешений Camera2, защита буфера `>=108 Мп`, отсев заглушек `<4 Мп`, сохранение высокой резкости `> 1`, автокарантин сбойных OpMode, пообъективные тумблеры и мгновенный кэшированный холодный старт).
+   * **Движок пост-обработки OpenGL ES 3.0 Pbuffer Shader + ARM64 NEON в JPEG (`libmakcam_turbojpeg.so`)** (GPU-шейдер Soft-Highlight Knee `> 212`, Chroma-Gated Vibrance с защитой серого и кожи, Cupertino SmartTone, радиальное сведение ХА и подавление фиолетовых/зелёных ореолов, суперпиксельный биннинг 9-в-1, сохранение APP2 ICC и lossless-оптимизация Хаффмана).
+   * **MediaTek & Exynos Sabre Runtime Auto-Patch Engine** (`pref_exynosfix_key=-1`, RAW16 NOP + Bayer GL) и **Multi-Gen Hexagon FastRPC (Android 10 SDK 29–Android 16) / QNN HTP NPU Dispatch**.
    * **Встроенный селектор переменной диафрагмы Aperture Switcher** (дискретный и плавный аналоговый слайдер).
 4. **Приоритет публикации (Prior Art):** Публикация репозитория с криптографически подписанной историей коммитов фиксирует дату мирового приоритета автора в соответствии с Бернской конвенцией об охране литературных и художественных произведений и соглашениями WIPO.
 
